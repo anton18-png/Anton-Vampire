@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Документация — Anton Vampire v1.0.0-beta</title>
+<meta name="description" content="Полная документация Anton Vampire: установка, интерфейс, 11 вкладок, темы, шрифты, настройки, безопасность, курсоры, обои, сборщики." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   Docs layout — Vapor × Material You
+   ============================================================ */
+:root {
+  --bg: #190831; --bg-deep: #0f0420; --bg-alt: #22103d;
+  --card: #2a1752; --card-hover: #33205f;
+  --border: #6e40c0; --border-soft: rgba(110, 64, 192, 0.35); --border-hard: rgba(110, 64, 192, 0.55);
+  --fg: #e6d9f5; --fg-muted: #a39ec4;
+  --mint: #32fbe2; --accent: #ea38b8; --accent2: #6e40c0; --accent-3: #b01a8b;
+  --success: #3af180; --warning: #ffbd05; --danger: #e34b54; --info: #1da2f2;
+  --glow-pink: rgba(234, 56, 184, 0.45);
+  --r-xs: 8px; --r-sm: 12px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px; --r-full: 9999px;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Mono', Consolas, monospace;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 150ms; --dur-2: 250ms; --dur-3: 400ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+*::selection { background: var(--accent); color: var(--bg-deep); }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: 16px; line-height: 1.7;
+  background: var(--bg); color: var(--fg);
+  min-height: 100vh; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(234, 56, 184, 0.08), transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(110, 64, 192, 0.12), transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(25, 8, 49, 0), var(--bg-deep) 130%);
+  z-index: -2; pointer-events: none;
+}
+.grid-bg {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(50, 251, 226, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 251, 226, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px; z-index: -1; pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+}
+.grain {
+  position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; letter-spacing: -0.02em; font-weight: 800; }
+h1 { font-size: clamp(2rem, 4vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); margin-top: 8px; }
+h3 { font-size: 1.25rem; margin-top: 32px; margin-bottom: 12px; color: var(--mint); }
+h4 { font-size: 1rem; margin-top: 24px; margin-bottom: 8px; color: var(--accent); font-family: var(--font-mono); font-weight: 600; }
+p { color: var(--fg-muted); margin-bottom: 14px; }
+a { color: var(--mint); text-decoration: none; transition: color var(--dur-1); }
+a:hover { color: var(--accent); }
+code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); background: rgba(50, 251, 226, 0.08); padding: 2px 6px; border-radius: 4px; }
+pre {
+  background: rgba(15, 4, 32, 0.85);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  padding: 20px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--fg);
+  margin: 16px 0;
+  position: relative;
+}
+pre code { background: transparent; padding: 0; color: inherit; }
+ul, ol { color: var(--fg-muted); margin: 12px 0 16px 24px; }
+li { margin: 6px 0; line-height: 1.65; }
+strong { color: var(--fg); font-weight: 600; }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(25, 8, 49, 0.6);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--border-soft);
+  height: 64px;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; height: 100%;
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 24px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 1rem; letter-spacing: 0.05em; color: var(--fg);
+}
+.nav-logo .bat { font-size: 1.25rem; filter: drop-shadow(0 0 8px var(--glow-pink)); }
+.nav-logo .brand {
+  background: linear-gradient(90deg, var(--accent), var(--mint));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  display: inline-flex; padding: 8px 14px;
+  border-radius: var(--r-full); color: var(--fg-muted);
+  font-size: 0.85rem; font-weight: 500;
+  transition: all var(--dur-1) var(--ease);
+}
+.nav-links a:hover { background: rgba(110, 64, 192, 0.18); color: var(--fg); }
+.nav-links a.active { background: rgba(50, 251, 226, 0.1); color: var(--mint); }
+
+/* ---------- Layout: sidebar + content ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 96px 24px 48px;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar TOC ---------- */
+.sidebar {
+  position: sticky;
+  top: 88px;
+  align-self: start;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  padding-right: 8px;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border-soft); border-radius: 4px; }
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mint);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0 12px;
+  margin-bottom: 12px;
+}
+.toc {
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.toc li { margin: 0; }
+.toc a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  color: var(--fg-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all var(--dur-1) var(--ease);
+  border-left: 2px solid transparent;
+}
+.toc a:hover {
+  background: rgba(110, 64, 192, 0.14);
+  color: var(--fg);
+  border-left-color: var(--border);
+}
+.toc a.active {
+  background: rgba(50, 251, 226, 0.1);
+  color: var(--mint);
+  border-left-color: var(--mint);
+}
+.toc-group {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+.toc-group-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0 12px;
+  margin-bottom: 6px;
+}
+
+/* ---------- Content ---------- */
+.content {
+  max-width: 820px;
+  min-width: 0;
+}
+.doc-header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.doc-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  border-radius: var(--r-full);
+  background: rgba(50, 251, 226, 0.08);
+  border: 1px solid rgba(50, 251, 226, 0.25);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mint);
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+.doc-title {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--mint) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+.doc-sub {
+  font-size: 1.05rem;
+  color: var(--fg-muted);
+  max-width: 640px;
+}
+
+.section {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border-soft);
+  scroll-margin-top: 88px;
+}
+.section:last-of-type { border-bottom: none; }
+.section-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+  background: rgba(234, 56, 184, 0.1);
+  border: 1px solid rgba(234, 56, 184, 0.3);
+  margin-bottom: 12px;
+}
+
+/* ---------- Callouts ---------- */
+.callout {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: var(--r-md);
+  margin: 20px 0;
+  border: 1px solid;
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+.callout.info {
+  background: rgba(29, 162, 242, 0.08);
+  border-color: rgba(29, 162, 242, 0.35);
+  color: var(--fg);
+}
+.callout.warn {
+  background: rgba(255, 189, 5, 0.08);
+  border-color: rgba(255, 189, 5, 0.35);
+  color: var(--fg);
+}
+.callout.danger {
+  background: rgba(227, 75, 84, 0.08);
+  border-color: rgba(227, 75, 84, 0.35);
+  color: var(--fg);
+}
+.callout.success {
+  background: rgba(58, 241, 128, 0.08);
+  border-color: rgba(58, 241, 128, 0.35);
+  color: var(--fg);
+}
+.callout-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+.callout-body { flex: 1; min-width: 0; }
+.callout-body strong { color: inherit; }
+
+/* ---------- Tables ---------- */
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-soft);
+  margin: 16px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: rgba(42, 23, 82, 0.4);
+}
+thead th {
+  background: rgba(15, 4, 32, 0.7);
+  padding: 12px 16px;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-soft);
+}
+tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(110, 64, 192, 0.15);
+  color: var(--fg);
+  vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(110, 64, 192, 0.08); }
+tbody td:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+/* ---------- Cards ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.card {
+  padding: 16px 18px;
+  border-radius: var(--r-md);
+  background: rgba(42, 23, 82, 0.55);
+  border: 1px solid var(--border-soft);
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+.card-desc { font-size: 0.83rem; color: var(--fg-muted); margin: 0; line-height: 1.5; }
+
+/* ---------- Keyboard ---------- */
+kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(42, 23, 82, 0.9);
+  border: 1px solid var(--border-soft);
+  border-bottom-width: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.83em;
+  color: var(--fg);
+  line-height: 1.4;
+}
+
+/* ---------- FAQ ---------- */
+details {
+  border-radius: var(--r-md);
+  background: rgba(42, 23, 82, 0.5);
+  border: 1px solid var(--border-soft);
+  margin: 8px 0;
+  overflow: hidden;
+}
+details[open] { border-color: var(--border-hard); }
+summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--fg);
+  list-style: none;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background var(--dur-1);
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: '▾';
+  color: var(--mint);
+  transition: transform var(--dur-2);
+  font-size: 0.85rem;
+}
+details[open] summary::after { transform: rotate(180deg); }
+summary:hover { background: rgba(110, 64, 192, 0.12); }
+details > div {
+  padding: 0 18px 16px;
+  color: var(--fg-muted);
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 24px 32px;
+  border-top: 1px solid var(--border-soft);
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: center;
+  gap: 24px;
+}
+.footer-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 800;
+}
+.footer-brand .bat { font-size: 1.3rem; }
+.footer-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  text-align: right;
+}
+.footer-meta div { margin: 2px 0; }
+
+/* ---------- Mobile ---------- */
+.mobile-toc-btn {
+  display: none;
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  z-index: 90;
+  box-shadow: 0 8px 24px rgba(234, 56, 184, 0.45);
+}
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding-top: 88px;
+    gap: 24px;
+  }
+  .sidebar {
+    position: fixed;
+    top: 64px; bottom: 0;
+    left: 0;
+    width: 280px;
+    max-height: none;
+    background: rgba(15, 4, 32, 0.98);
+    border-right: 1px solid var(--border-soft);
+    padding: 20px;
+    transform: translateX(-100%);
+    transition: transform var(--dur-2) var(--ease);
+    z-index: 95;
+    overflow-y: auto;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .mobile-toc-btn { display: flex; align-items: center; justify-content: center; }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .doc-title { font-size: 1.75rem; }
+  h2 { font-size: 1.4rem; }
+  .section { padding: 32px 0; }
+  pre { font-size: 0.78rem; padding: 14px; }
+  thead th, tbody td { padding: 8px 10px; font-size: 0.82rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="grain"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="bat">🩸</span>
+      <span class="brand">ANTON VAMPIRE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="transition.html">Переход</a></li>
+      <li><a href="docs.html" class="active">Документация</a></li>
+      <li><a href="https://github.com/anton18-png/Anton-Vampire" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<button class="mobile-toc-btn" id="mobileTocBtn" aria-label="Содержание">☰</button>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="toc-title">Содержание</div>
+    <ul class="toc">
+      <li><a href="#intro">Введение</a></li>
+      <li><a href="#requirements">Требования</a></li>
+      <li><a href="#install">Установка</a></li>
+      <li><a href="#interface">Интерфейс</a></li>
+
+      <li class="toc-group">
+        <div class="toc-group-title">Вкладки</div>
+        <a href="#tab-home">🏠 Главная</a>
+        <a href="#tab-security">🛡️ Безопасность</a>
+        <a href="#tab-startup">🚀 Автозагрузка</a>
+        <a href="#tab-optimization">⚡ Оптимизация</a>
+        <a href="#tab-cleaner">🧹 Очистка</a>
+        <a href="#tab-fixes">⚜️ Исправления</a>
+        <a href="#tab-game">🎮 Игровой режим</a>
+        <a href="#tab-power">🔋 Электропитание</a>
+        <a href="#tab-customization">🎨 Кастомизация</a>
+        <a href="#tab-uninstaller">📦 Приложения</a>
+        <a href="#tab-settings">⚙️ Настройки</a>
+      </li>
+
+      <li class="toc-group">
+        <div class="toc-group-title">Механики</div>
+        <a href="#themes">Темы и шрифты</a>
+        <a href="#checkboxes">Режимы чекбоксов</a>
+        <a href="#runner">Запуск твиков</a>
+        <a href="#sources">Источники и пары</a>
+        <a href="#preload">Preload и lazy</a>
+      </li>
+
+      <li class="toc-group">
+        <div class="toc-group-title">Справочник</div>
+        <a href="#config">Конфиг</a>
+        <a href="#portable">Portable mode</a>
+        <a href="#shortcuts">Горячие клавиши</a>
+        <a href="#faq">FAQ</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+        <a href="#license">Лицензия</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+    <header class="doc-header">
+      <div class="doc-eyebrow">🩸 Документация · v1.0.0-beta</div>
+      <h1 class="doc-title">Anton Vampire</h1>
+      <p class="doc-sub">
+        Полный справочник по приложению: установка, интерфейс, все 11 вкладок,
+        темы, шрифты, настройки, безопасность, курсоры, обои и сборщики.
+      </p>
+    </header>
+
+    <!-- INTRO -->
+    <section class="section" id="intro">
+      <div class="section-tag">Начало</div>
+      <h2>Введение</h2>
+      <p>
+        <strong>Anton Vampire</strong> — полностью переписанный на Electron
+        Windows оптимизатор. Наследник <strong>Extreme Tweaker</strong>
+        (Python/tkinter) с сохранением концепции: запуск
+        <code>.bat</code>/<code>.cmd</code>/<code>.ps1</code>/<code>.exe</code>/
+        <code>.reg</code>/<code>.pow</code> твиков через удобный UI.
+      </p>
+      <p>
+        Внутри — <strong>1000+ твиков</strong>, сгруппированных по 11 вкладкам,
+        <strong>~80 тем</strong>, Material You интерфейс, <strong>аудит
+        безопасности</strong>, управление автозагрузкой, курсоры, обои,
+        HTML-отчёты и сборщики JSON-данных.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Open Source</div>
+          <p class="card-desc">MIT-подобная лицензия, весь код на GitHub.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Portable</div>
+          <p class="card-desc">Всё в <code>extreme_data/</code> рядом с exe.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Без зависимостей</div>
+          <p class="card-desc">Electron + Node.js уже в бандле.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Windows 10/11</div>
+          <p class="card-desc">Только Windows, x64.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div class="callout-body">
+          <strong>Требуются права администратора.</strong> Приложение
+          проверяет <code>fltmc</code> при старте и предлагает перезапуск
+          с UAC через <code>Start-Process -Verb RunAs</code>.
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUIREMENTS -->
+    <section class="section" id="requirements">
+      <div class="section-tag">Требования</div>
+      <h2>Системные требования</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Параметр</th><th>Минимум</th><th>Рекомендуется</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ОС</td><td>Windows 10 (1809+)</td><td>Windows 11 23H2+</td></tr>
+            <tr><td>Архитектура</td><td>x64</td><td>x64</td></tr>
+            <tr><td>ОЗУ</td><td>2 GB</td><td>4 GB</td></tr>
+            <tr><td>Диск</td><td>~150 MB</td><td>~500 MB (кэш курсоров, обоев)</td></tr>
+            <tr><td>Права</td><td>Администратор</td><td>Администратор</td></tr>
+            <tr><td>Node.js</td><td>—</td><td>— (всё в бандле)</td></tr>
+            <tr><td>Python</td><td>—</td><td>Только для сборщиков JSON</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div class="callout-body">
+          Python 3.8+ нужен <strong>только</strong> если вы собираете
+          JSON-данные через вкладку <em>Настройки → Утилиты</em>. Для
+          обычной работы не требуется.
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALL -->
+    <section class="section" id="install">
+        <div class="section-tag">Установка</div>
+        <h2>Установка</h2>
+      
+        <h3>Способ 1: одной командой</h3>
+        <p>Откройте <kbd>Win</kbd> + <kbd>R</kbd> → <code>cmd</code> и вставьте:</p>
+        <pre><code>curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Setup.1.0.0-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"</code></pre>
+      
+        <h3>Способ 2: Setup вручную</h3>
+        <ol>
+          <li>Скачайте <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Setup.1.0.0-beta.exe" download>Anton.Vampire.Setup.1.0.0-beta.exe</a></li>
+          <li>Запустите — UAC запросит подтверждение</li>
+          <li>Следуйте инструкциям установщика NSIS</li>
+        </ol>
+      
+        <h3>Способ 3: Portable</h3>
+        <p>
+          Скачайте <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Portable.rar" download>Anton.Vampire.Portable.rar</a>,
+          распакуйте в любую папку и запустите <code>AntonVampire.exe</code>.
+          Все данные лягут в <code>extreme_data/</code> рядом с exe.
+        </p>
+      
+        <h3>Способ 4: из исходников</h3>
+        <pre><code>git clone https://github.com/anton18-png/Anton-Vampire.git
+      cd Anton-Vampire
+      npm install
+      npm start</code></pre>
+      
+        <div class="callout success">
+          <div class="callout-icon">✓</div>
+          <div class="callout-body">
+            <strong>Проверка:</strong> после запуска откройте <em>Настройки → О программе</em>
+            — там будет версия и кнопка «↺ Сбросить все настройки».
+          </div>
+        </div>
+      </section>
+
+    <!-- INTERFACE -->
+    <section class="section" id="interface">
+      <div class="section-tag">UI</div>
+      <h2>Интерфейс</h2>
+      <p>Приложение состоит из 5 постоянных элементов:</p>
+      <ol>
+        <li><strong>Сайдбар</strong> — разворачивается по hover, 11 разделов</li>
+        <li><strong>Топбар</strong> — драг-зона окна, поиск, кнопки</li>
+        <li><strong>Табы</strong> — под-вкладки внутри раздела</li>
+        <li><strong>Content</strong> — содержимое активной вкладки</li>
+        <li><strong>Статус-бар</strong> — статус и счётчик выбранных</li>
+      </ol>
+
+      <h3>Сайдбар</h3>
+      <p>
+        В свёрнутом виде — только иконки (<code>--sidebar-collapsed: 60px</code>).
+        При hover разворачивается до <code>--sidebar-expanded: 216px</code>
+        за <code>250ms</code> с <code>cubic-bezier(0.2, 0, 0, 1)</code>.
+        Снизу — 5 иконок: тема, звук, фон, Telegram, донат.
+      </p>
+
+      <h3>Топбар</h3>
+      <ul>
+        <li>Лого + версия</li>
+        <li>Глобальный поиск <code>#global-search</code> — фильтрует чекбоксы по имени</li>
+        <li>Кнопки: <em>Выделить всё</em>, <em>▶ Выполнить</em>, <em>♻ Обновить</em>, <em>⛶ Fullscreen</em>, <em>— Свернуть</em>, <em>✕ Закрыть</em></li>
+      </ul>
+
+      <h3>Панель лога</h3>
+      <p>
+        Внизу экрана фиксированная панель (<code>#log-panel</code>), свёрнутая
+        по умолчанию в 30px. При запуске твиков разворачивается и стримит
+        stdout/stderr построчно. Кнопки: <em>▾ свернуть</em>, <em>✕ очистить</em>.
+      </p>
+
+      <h3>Тосты</h3>
+      <p>Плавающие уведомления в правом нижнем углу. 4 типа: info, success, warning, error.</p>
+    </section>
+
+    <!-- TAB: HOME -->
+    <section class="section" id="tab-home">
+      <div class="section-tag">Вкладка 1</div>
+      <h2>🏠 Главная</h2>
+      <p>
+        Приветствие, аватар пользователя, кнопка «Оптимизация» и 4
+        стат-карточки с живыми данными (CPU, GPU, RAM, диск). Ниже — сетка
+        из 10 плиток для быстрого перехода по разделам.
+      </p>
+      <ul>
+        <li>Живой polling железа каждые 2 с через <code>window.api.hardware.stats()</code></li>
+        <li>CPU/GPU загрузка → цвет прогресс-бара (зелёный → жёлтый → красный)</li>
+        <li>Иконки разделов из <code>assets/papirus/apps/*</code> с fallback на emoji</li>
+      </ul>
+    </section>
+
+    <!-- TAB: SECURITY -->
+    <section class="section" id="tab-security">
+      <div class="section-tag">Вкладка 2</div>
+      <h2>🛡️ Безопасность</h2>
+      <p>Три под-вкладки с независимыми аудитами:</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Аудит</th><th>Проверок</th><th>Что оценивает</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Безопасность</td><td>21</td><td>UAC, BitLocker, SMBv1, LSA, SmartScreen, DEP/ASLR, WDigest, LLMNR, Remote Registry, PowerShell v2 и др.</td></tr>
+            <tr><td>Приватность</td><td>14</td><td>Телеметрия, геолокация, рекламный ID, User Activities, CDP, Sync, WER, NVIDIA Telemetry</td></tr>
+            <tr><td>Удобство</td><td>13</td><td>Defender, UAC, SmartScreen, Windows Update, Firewall (антагонист «Безопасности»)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Формат вывода .bat</h3>
+      <pre><code>ITEM|Passed|S01|UAC|Включён|Включён
+ITEM|Medium|S04|WDigest|Включён|Отключён
+ITEM|High|P03|Telemetry|1|0
+END|score=4.12|percent=68|grade=Well done|passed=14|low=3|medium=3|high=1|total=21</code></pre>
+      <p>
+        Парсер <code>parseBatOutput</code> читает построчно, ищет <code>ITEM|</code> и
+        <code>END|</code>. Score = (набрано / максимум) × 5 + 1.
+        Рейтинг: 1 — 😾 Bogus, 2 — 😿 Weak, 3 — 🙀 You should do better,
+        4 — 😺 Sufficient, 5 — 😻 Well done, 6 — 😹 Excellent.
+      </p>
+
+      <h3>Firewall</h3>
+      <p>Отдельная секция для каждого <code>.exe</code>:</p>
+      <ul>
+        <li>Кнопка «➕ Добавить программу» → <code>New-NetFirewallRule -Direction Outbound</code></li>
+        <li>Правила именуются <code>AV Allow: &lt;name&gt;</code> / <code>AV Block: &lt;name&gt;</code></li>
+        <li>При включении Block — конфликтующие Allow автоматически отключаются</li>
+        <li>Toggle для всех профилей: <code>Set-NetFirewallProfile -Profile Domain,Public,Private</code></li>
+      </ul>
+
+      <h3>NetMon (Сетевой монитор)</h3>
+      <p>
+        Живой снимок TCP-соединений (<code>Get-NetTCPConnection -State Established</code>)
+        и локальных портов (<code>-State Listen</code>). Резолв IP:
+      </p>
+      <ul>
+        <li><strong>none</strong> — только IP</li>
+        <li><strong>ptr</strong> — стандартные PTR-записи (1e100.net, cloudfront.net)</li>
+        <li><strong>brand</strong> — через ip-api.com → «Google», «Telegram», «Discord» и т.д.</li>
+      </ul>
+
+      <h3>HTML-отчёты</h3>
+      <p>
+        Кнопки «📄 Все отчёты» и «📄 Экспорт». Генерируется самодостаточный
+        HTML с тёмной темой, статистикой, таблицами проверок и статусом
+        firewall. Сохраняется через <code>dialog.showSaveDialog</code>.
+      </p>
+    </section>
+
+    <!-- TAB: STARTUP -->
+    <section class="section" id="tab-startup">
+      <div class="section-tag">Вкладка 3</div>
+      <h2>🚀 Автозагрузка</h2>
+      <p>4 источника + 2 режима (Safe / Advanced).</p>
+
+      <h3>Источники</h3>
+      <ul>
+        <li><strong>Папки</strong> — <code>%APPDATA%\...\Startup</code> (user) и <code>%ProgramData%\...\Startup</code> (system). Отключение — переименование в <code>.disabled</code></li>
+        <li><strong>Реестр</strong> — <code>HKCU\Run</code>, <code>RunOnce</code>, <code>HKLM\Run</code>, <code>RunOnce</code>, <code>WOW6432Node\...</code>. Отключение — перенос значения в <code>_disabled</code>-ключ</li>
+        <li><strong>Задачи</strong> — <code>Get-ScheduledTask</code>, фильтр по <code>MSFT_TaskLogonTrigger</code> / <code>MSFT_TaskBootTrigger</code>. Toggle через <code>Enable/Disable-ScheduledTask</code></li>
+        <li><strong>Службы</strong> — <code>Get-CimInstance Win32_Service</code>. Toggle через <code>sc config start= auto|disabled</code></li>
+      </ul>
+
+      <h3>Категории</h3>
+      <div class="card-grid">
+        <div class="card"><div class="card-title">🛡 Антивирус</div><p class="card-desc">Defender, Kaspersky, Avast, ESET</p></div>
+        <div class="card"><div class="card-title">📡 Телеметрия</div><p class="card-desc">DiagTrack, dmwappush, PCA</p></div>
+        <div class="card"><div class="card-title">🌊 Edge</div><p class="card-desc">msedge, edgeupdate</p></div>
+        <div class="card"><div class="card-title">📄 Office</div><p class="card-desc">Word, Excel, Outlook</p></div>
+        <div class="card"><div class="card-title">🪟 MS-программы</div><p class="card-desc">OneDrive, Teams, Xbox, Spotify, Steam</p></div>
+      </div>
+
+      <h3>Защита критичных</h3>
+      <p>
+        <code>CRITICAL_SERVICES</code> — 40+ служб (RpcSs, DcomLaunch, PlugPlay,
+        Power, ProfSvc, Themes, Winmgmt, EventLog, Disk, …) — не показываются.
+      </p>
+      <p>
+        <code>isCriticalTask()</code> — 60+ запрещённых путей
+        (<code>Microsoft\Windows\UpdateOrchestrator</code>,
+        <code>Windows Defender</code>, <code>Servicing</code>,
+        <code>AppxDeploymentClient</code>, …). У задач и папок защищённые
+        элементы показываются с 🔒, но их нельзя toggle/delete.
+      </p>
+
+      <h3>Режимы</h3>
+      <ul>
+        <li><strong>Safe</strong> (по умолчанию) — только элементы с категорией или user-элементы</li>
+        <li><strong>Advanced</strong> — все элементы, кроме критичных</li>
+      </ul>
+    </section>
+
+    <!-- TAB: OPTIMIZATION -->
+    <section class="section" id="tab-optimization">
+      <div class="section-tag">Вкладка 4</div>
+      <h2>⚡ Оптимизация</h2>
+      <p>7 источников твиков + вендор-панель.</p>
+
+      <h3>Источники</h3>
+      <ul>
+        <li><strong>📦 Стандартные</strong> — <code>drivers_tabs.json</code></li>
+        <li><strong>🟢 XOS-Tweaks</strong> — <code>x_os_tabs.json</code></li>
+        <li><strong>💀 ImmortalOS</strong> — <code>immortal_os_tabs.json</code></li>
+        <li><strong>🎯 MartyFiles</strong> — <code>marty_files_tabs.json</code></li>
+        <li><strong>🔷 SynergyOS</strong> — <code>synergy_os_tabs.json</code></li>
+        <li><strong>🟣 SystemX</strong> — <code>system_x_tabs.json</code></li>
+        <li><strong>👑 VainOS</strong> — <code>vain_os_tabs.json</code></li>
+      </ul>
+
+      <h3>Вендор-панель</h3>
+      <p>
+        В «Стандартных» сверху горизонтальная панель из 5 секций:
+        NVIDIA (зелёный), AMD (красный), Intel (синий), DirectX (голубой),
+        OpenGL (жёлтый). Каждая — со своим цветом, иконкой Papirus и кнопкой
+        «выбрать всё».
+      </p>
+
+      <h3>Дропдауны</h3>
+      <p>3 выпадающих списка для одиночных твиков:</p>
+      <ul>
+        <li>Порог разделения <code>svchost</code></li>
+        <li>Разделение приоритетов Win32</li>
+        <li>Службы (наборы отключения)</li>
+      </ul>
+
+      <h3>Категории твиков</h3>
+      <p>7 под-вкладок: memory, sound, keyboard, mouse, hyperv, tweaks, network.</p>
+    </section>
+
+    <!-- TAB: CLEANER -->
+    <section class="section" id="tab-cleaner">
+      <div class="section-tag">Вкладка 5</div>
+      <h2>🧹 Очистка</h2>
+      <p>12 секций со свёрнутыми блоками и стримом лога.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Секция</th><th>Что чистит</th></tr></thead>
+          <tbody>
+            <tr><td>🎞 Кэш шейдеров</td><td>DirectX, NVIDIA, AMD, Intel</td></tr>
+            <tr><td>📋 Логи и дампы</td><td>Журналы событий, CBS, memory.dmp, CrashDumps, WER</td></tr>
+            <tr><td>🔄 Windows Update</td><td>SoftwareDistribution, DataStore, catroot2, Edge Update</td></tr>
+            <tr><td>🗑 Temp</td><td>%TEMP%, C:\Windows\Temp, DriverStore\Temp</td></tr>
+            <tr><td>⚡ Prefetch и корзина</td><td>Prefetch, $Recycle.Bin, cleanmgr</td></tr>
+            <tr><td>🖼 Иконки и эскизы</td><td>thumbcache, IconCache.db</td></tr>
+            <tr><td>📦 Системные кэши</td><td>FontCache, Defender, DNS, Store, Explorer Bags</td></tr>
+            <tr><td>💾 Диск и SSD</td><td>TRIM, defrag, WinSxS analyze/cleanup/resetbase</td></tr>
+            <tr><td>🎮 Игры и приложения</td><td>Discord, Steam, Epic, браузеры</td></tr>
+            <tr><td>🗑 Системные папки</td><td>Windows.old, PerfLogs, inetpub</td></tr>
+            <tr><td>🌐 Сеть и службы</td><td>DNS, Winsock, TCP/IP, IP renew, Store fix</td></tr>
+            <tr><td>🧩 Прочее</td><td>Загрузки, скриншоты, BlueStacks, Delivery Optimization, IndexedDB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Кнопки «↕ Развернуть все» и «↕ Свернуть все». Маркеры:</p>
+      <ul>
+        <li>★ Рекомендуется</li>
+        <li>⚠ Опасно (требует confirm)</li>
+        <li>⚠ Внимание (требует confirm)</li>
+      </ul>
+    </section>
+
+    <!-- TAB: FIXES -->
+    <section class="section" id="tab-fixes">
+      <div class="section-tag">Вкладка 6</div>
+      <h2>⚜️ Исправления</h2>
+      <p>
+        Hero-блок «♻ Полный откат» + 8 «фишек» (Диагностика, Файлы ОС,
+        Сеть и DNS, Устройства, Защита, Игры, Input lag, Службы).
+      </p>
+
+      <h3>5 фикс-секций</h3>
+      <ol>
+        <li><strong>🔧 Базовое восстановление ОС</strong> — DISM, SFC, CHKDSK, Store, shaders, BSOD</li>
+        <li><strong>🛡 Сеть и устройства</strong> — Wi-Fi, VPN, QoS, микрофон, камера, BT</li>
+        <li><strong>🖥 Система и интерфейс</strong> — шрифты, Win+V, меню, поиск, уведомления, питание</li>
+        <li><strong>🎮 Игровые фиксы</strong> — EAC/BattlEye, Valorant, акселерация, GameDVR, HPET, HAGS</li>
+        <li><strong>⚡ Точечная реанимация</strong> — TCP/IP, звук, Windows Update, WMI, DNS, WU</li>
+      </ol>
+
+      <h3>Дополнительные блоки</h3>
+      <ul>
+        <li>NETWORK_FIX_ITEMS (6 карточек)</li>
+        <li>SYSTEM_FIX_ITEMS (5 карточек)</li>
+        <li>CLEAN_FIX_ITEMS (11 карточек)</li>
+      </ul>
+      <p>Внизу — чекбоксы твиков из <code>tabs_3</code>.</p>
+    </section>
+
+    <!-- TAB: GAME -->
+    <section class="section" id="tab-game">
+      <div class="section-tag">Вкладка 7</div>
+      <h2>🎮 Игровой режим</h2>
+      <p>Две панели:</p>
+      <ul>
+        <li><strong>Слева</strong> — кнопки «▶ Применить игровой режим» / «↩ Откатить», предупреждения</li>
+        <li><strong>Справа</strong> — список отключаемых служб (<code>HARDCORE_SERVICES</code>, ~200) в 3 колонки</li>
+      </ul>
+      <p>Кнопки запускают:</p>
+      <pre><code>tweaks/GameMode/Игровой режим.bat
+tweaks/GameMode/Откат игрового режима.bat</code></pre>
+      <p>Службы переводятся в <code>Start=4</code> (отключено). Обратно — через откат.</p>
+      <div class="callout danger">
+        <div class="callout-icon">⚠</div>
+        <div class="callout-body">
+          Игровой режим отключает многие службы Windows. После применения
+          возможны проблемы с Bluetooth, печатью, уведомлениями. Создайте
+          точку восстановления перед применением.
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: POWER -->
+    <section class="section" id="tab-power">
+      <div class="section-tag">Вкладка 8</div>
+      <h2>🔋 Электропитание</h2>
+      <p>Таблица тестов планов + 8 источников схем.</p>
+
+      <h3>Таблица</h3>
+      <p>
+        Загружается из <code>src/renderer/tabs/power-table.json</code>.
+        Колонки: план, ср./мин./макс. задержка, ср. FPS, темп. CPU, комментарий.
+        Источник — Google Sheets (ссылка в футере).
+      </p>
+
+      <h3>Источники схем</h3>
+      <ul>
+        <li><strong>📦 Стандартные</strong> — <code>tabs_2</code> + таблица</li>
+        <li><strong>🟢 XOS-Tweaks</strong> — <code>x_os_power_tabs.json</code></li>
+        <li><strong>🟢 xOS (расширенный)</strong> — <code>x_os_legacy_power_tabs.json</code></li>
+        <li><strong>🟣 SystemX</strong> — <code>system_x_power_tabs.json</code></li>
+        <li><strong>🎩 Igromanoff</strong> — <code>igromanoff_power_tabs.json</code></li>
+        <li><strong>👑 VainOS</strong> — <code>vain_os_power_tabs.json</code></li>
+        <li><strong>🔷 SynergyOS</strong> — <code>synergy_os_power_tabs.json</code></li>
+        <li><strong>📁 Другое</strong> — <code>drugoe_power_tabs.json</code></li>
+      </ul>
+      <p>Импорт <code>.pow</code> через <code>powercfg /import</code>.</p>
+    </section>
+
+    <!-- TAB: CUSTOMIZATION -->
+    <section class="section" id="tab-customization">
+      <div class="section-tag">Вкладка 9</div>
+      <h2>🎨 Кастомизация</h2>
+      <p>2 под-вкладки: Курсоры и Твики.</p>
+
+      <h3>Курсоры</h3>
+      <p>Загрузка с GitHub <code>anton18-png/Pretty-Cursors</code>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Действие</th><th>Что происходит</th></tr></thead>
+          <tbody>
+            <tr><td>📥 Скачать</td><td><code>vampire-red.7z</code> → <code>cursors_cache/</code></td></tr>
+            <tr><td>✅ Установить</td><td>7z → <code>C:\Windows\Cursors\&lt;name&gt;\</code></td></tr>
+            <tr><td>▶️ Применить</td><td>Реестр <code>HKCU\Control Panel\Cursors</code> + <code>SystemParametersInfo(SPI_SETCURSORS)</code></td></tr>
+            <tr><td>🗑️ Удалить</td><td>Папка курсора + архив</td></tr>
+            <tr><td>🗑️ Удалить все</td><td>Все курсоры + сброс на дефолт</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>16 ролей: Arrow, Help, AppStarting, Wait, Crosshair, IBeam, NWPen, No, SizeNS, SizeWE, SizeNWSE, SizeNESW, SizeAll, UpArrow, Hand, Person.</p>
+
+      <h3>Твики</h3>
+      <p>4 источника: XOS, Marty, Synergy, Vain.</p>
+      <pre><code>tweaks/x_os_customization_tabs.json
+tweaks/marty_files_customization_tabs.json
+tweaks/synergy_os_customization_tabs.json
+tweaks/vain_os_customization_tabs.json</code></pre>
+    </section>
+
+    <!-- TAB: UNINSTALLER -->
+    <section class="section" id="tab-uninstaller">
+      <div class="section-tag">Вкладка 10</div>
+      <h2>📦 Приложения</h2>
+      <p>Три блока:</p>
+
+      <h3>1. Обнаруженные компоненты</h3>
+      <p>
+        PS1-скрипт <code>appx-detect.ps1</code> проверяет наличие
+        Defender, Edge, WebView2, OneDrive. Для каждого — 4 способа удаления:
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Компонент</th><th>Способы</th></tr></thead>
+          <tbody>
+            <tr><td>OneDrive</td><td>Мягкое / Полное / Хардкор / Зачистка следов</td></tr>
+            <tr><td>Edge</td><td>AppX / Полное / Хардкор / Только блокировка</td></tr>
+            <tr><td>WebView2</td><td>Только WebView2 / Edge+WebView2 / Хардкор</td></tr>
+            <tr><td>Defender</td><td>Отключить / Вернуть / Удалить / Хардкор</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2. Appx-приложения</h3>
+      <p>Все пользовательские UWP через <code>appx-list.ps1</code>.</p>
+      <ul>
+        <li>Удаление — <code>appx-remove.ps1</code> с <code>Remove-AppxPackage -AllUsers</code></li>
+        <li>Спец-действия — <code>appx-actions.ps1 -Action onedrive|rdp|edge</code></li>
+        <li>Иконки: Papirus + emoji-fallback</li>
+      </ul>
+
+      <h3>3. Программы-батники</h3>
+      <p>
+        Секция «🗑 Программы-батники для удаления» из
+        <code>removal_tabs.json</code>. 8 категорий: Defender, Edge,
+        OneDrive, Office, Xbox, UWP, tools, other. Каждый батник
+        запускается в отдельном окне консоли.
+      </p>
+
+      <h3>4. Оптимизация приложений</h3>
+      <p>
+        Секция «⚡ Оптимизация приложений» из
+        <code>apps_optimization_tabs.json</code>. 3 категории:
+        браузеры, игры, приложения.
+      </p>
+    </section>
+
+    <!-- TAB: SETTINGS -->
+    <section class="section" id="tab-settings">
+      <div class="section-tag">Вкладка 11</div>
+      <h2>⚙️ Настройки</h2>
+      <p>6 под-вкладок:</p>
+
+      <h3>🎨 Внешний вид</h3>
+      <ul>
+        <li><strong>CSS-стиль</strong> — 4 карточки (Material 3, Pixel, Material You, Pretty Kitty)</li>
+        <li><strong>Тема</strong> — ~80 в 10 группах с collapsible-секциями и превью</li>
+        <li><strong>Эффект стекла</strong> — none / glass / aero (Mica/Acrylic)</li>
+        <li><strong>Прозрачность сайдбара</strong> — слайдер 0–100%</li>
+        <li><strong>Единый цвет кнопок</strong> — toggle</li>
+      </ul>
+
+      <h3>🔤 Шрифты</h3>
+      <ul>
+        <li>6 селектов: heading/body/mono × latin/cyr</li>
+        <li>2 слайдера веса: 100–900</li>
+        <li>2 поля размера: 10–32 px</li>
+        <li>3 превью: heading, body, mono</li>
+      </ul>
+
+      <h3>🖥 Интерфейс</h3>
+      <ul>
+        <li>Режим чекбоксов (regular / rectangle / wide / expandable)</li>
+        <li>Колонок по умолчанию (1–6)</li>
+        <li>Звук: toggle + громкость</li>
+        <li>Способ запуска твиков (5 режимов)</li>
+        <li>Таймаут твика (10–3600 с)</li>
+        <li>Показывать кнопки отмены (↩)</li>
+        <li>Динамическая загрузка / preload / splash</li>
+        <li>Логи: вкл/выкл</li>
+        <li>Авто-аудит безопасности</li>
+        <li>NetMon: none / ptr / brand</li>
+      </ul>
+
+      <h3>🛠 Утилиты</h3>
+      <p>Запуск сборщиков JSON:</p>
+      <ul>
+        <li><code>build_all_tabs.py</code> — оркестратор</li>
+        <li><code>build_tabs.py</code> — tabs.json</li>
+        <li><code>build_full_tabs.py</code> — расширенный tabs.json</li>
+        <li><code>build_hardening_json.py</code> — HardeningKitty</li>
+        <li><code>build_apps_json.py</code> — Apps</li>
+        <li><code>build_drivers_json.py</code> — Drivers</li>
+        <li><code>build_removal_json.py</code> — Removal</li>
+        <li><code>audit_tweaks.py</code> — проверка целостности</li>
+      </ul>
+      <p>Кнопки «▶ Запустить» и «🔍 Dry» (dry-run). Вывод стримится в лог.</p>
+
+      <h3>🖼 Обои</h3>
+      <p>Сетка с превью. Кнопки: «📁 Добавить файлы», «🔗 По ссылке», «📂 Открыть папку», «✕ Убрать фон».</p>
+
+      <h3>ℹ О программе</h3>
+      <p>Версия, ссылки на GitHub / Telegram, кнопка «↺ Сбросить все настройки».</p>
+    </section>
+
+    <!-- THEMES -->
+    <section class="section" id="themes">
+      <div class="section-tag">Механика</div>
+      <h2>Темы и шрифты</h2>
+
+      <h3>Темы</h3>
+      <p>
+        В <code>renderer/themes.js</code> экспортируется объект <code>THEMES</code>
+        (~80 ключей) и <code>THEMES_META.groups</code> (10 групп).
+        Применение — <code>applyTheme(name, unified, sidebarOpacity)</code>:
+        устанавливает CSS-переменные (<code>--bg</code>, <code>--accent</code>,
+        <code>--fg</code>, …) на <code>:root</code>.
+      </p>
+      <pre><code>vampire_the_masquerade: {
+  bg:       '#0a0508', bgAlt:   '#120a0f',
+  card:     '#1a0f16', cardHover:'#24141d',
+  border:   '#8b0000', fg:      '#e8d5d5',
+  fgMuted:  '#9a7a7a',
+  accent:   '#b30000', accent2: '#7a0000',
+  accentText:'#ffffff',
+  success:  '#4a7a4a', warning: '#b8860b',
+  danger:   '#cc0000', info:    '#5c5c8a'
+}</code></pre>
+
+      <h3>Группы тем</h3>
+      <ul>
+        <li>🎨 Material 3 (material3, material3_light)</li>
+        <li>☀️ Светлые (cosmo, flatly, litera, minty, …)</li>
+        <li>🌗 Тёмные версии светлых (генерируются через <code>makeDark</code>)</li>
+        <li>🌑 Тёмные ttkbootstrap (darkly, superhero, solar, cyborg, vapor)</li>
+        <li>⚡ Тёмные от разработчика (cyberpunk, hacker, palenight, boosterx, boosterxvapor)</li>
+        <li>🩸 Тёмные от Антона (extreme, newhone, nord)</li>
+        <li>💀 Тёмные от Русланчика (wincry, ruslanchik, wincry_warning, wincry_full_warning)</li>
+        <li>✨ Новые (bloodmoon, abyss, newnord, catppuccin, dracula, hellokitty, kuromi, onedark)</li>
+        <li>🎯 Curated 2.0 — тёмные / светлые (bootstrap, pydata, nord_curated, solarized, gruvbox, tokyo_night, one, everforest)</li>
+        <li>🎮 Игровые (vampire_the_masquerade, counter_strike_16, counter_strike_2, diablo)</li>
+      </ul>
+
+      <h3>Шрифты</h3>
+      <p>6 слотов + 2 веса:</p>
+      <pre><code>font_heading_latin: 'Silkscreen',    // латиница
+font_heading_cyr:   'JetBrains Mono', // кириллица (fallback)
+font_body_latin:    'JetBrains Mono',
+font_body_cyr:      'JetBrains Mono',
+font_mono:          'JetBrains Mono',
+heading_font_size:  15,
+body_font_size:     13,
+heading_font_weight: 700,
+body_font_weight:    400</code></pre>
+      <p>
+        <code>applyFonts()</code> инжектит <code>&lt;style id="__dynamic_fonts__"&gt;</code>
+        с большим списком селекторов и <code>!important</code>. Каждый слот —
+        CSS-переменная (<code>--font-heading</code>, <code>--font-body</code>,
+        <code>--font-mono</code>).
+      </p>
+    </section>
+
+    <!-- CHECKBOXES -->
+    <section class="section" id="checkboxes">
+      <div class="section-tag">Механика</div>
+      <h2>Режимы чекбоксов</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Значение</th><th>Название</th><th>Реализация</th></tr></thead>
+          <tbody>
+            <tr><td>regular / hone</td><td>Hone</td><td><code>renderHone</code> — сетка карточек, кнопка ▶, описание</td></tr>
+            <tr><td>rectangle / all-tweaker</td><td>All Tweaker</td><td><code>renderAllTweaker</code> — компактные карточки с tooltip</td></tr>
+            <tr><td>wide / expandable / boosterx</td><td>BoosterX</td><td><code>renderBoosterX</code> — широкие карточки с ➕ и ▶</td></tr>
+            <tr><td>sapphire</td><td>Sapphire</td><td>⚠ Временно = BoosterX (рендер не реализован)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Поведение:</p>
+      <ul>
+        <li>Клик по карточке — toggle чекбокса</li>
+        <li>Кнопка ▶ — запустить только этот твик</li>
+        <li>Кнопка ↩ — запустить парный файл отмены (если есть)</li>
+        <li>Кнопка ➕ / ➖ — раскрыть/скрыть описание</li>
+        <li>Hover в All Tweaker — tooltip с описанием</li>
+      </ul>
+      <p>
+        Описания берутся из <code>tweaks/descriptions.txt</code> через
+        <code>window.api.tweaks.describe()</code> и кэшируются на 5 минут
+        с фоновой чисткой каждую минуту.
+      </p>
+    </section>
+
+    <!-- RUNNER -->
+    <section class="section" id="runner">
+      <div class="section-tag">Механика</div>
+      <h2>Запуск твиков</h2>
+
+      <h3>6 режимов</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Режим</th><th>Что делает</th></tr></thead>
+          <tbody>
+            <tr><td>default</td><td>cmd /c через cmd.exe</td></tr>
+            <tr><td>no_launcher</td><td>только cmd /c</td></tr>
+            <tr><td>launcher</td><td>Utils/launcher.exe &lt;file&gt;</td></tr>
+            <tr><td>powerrun</td><td>Utils/PowerRun.exe &lt;file&gt;</td></tr>
+            <tr><td>nsudolg</td><td>Utils/NSudoLG.exe -U:T -P:E -ShowWindowMode:Hide -Wait cmd.exe /c &lt;file&gt;</td></tr>
+            <tr><td>cmd</td><td>cmd.exe /c</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Патчинг .bat</h3>
+      <p>Перед запуском <code>_makePatchedBat()</code>:</p>
+      <ul>
+        <li>Удаляет BOM и <code>echo off</code> / <code>chcp</code> (заменяет на свой header)</li>
+        <li>Вырезает <code>pause</code>, <code>timeout</code>, <code>choice</code> (заменяет на <code>rem</code>)</li>
+        <li>Патчит <code>start</code> → <code>start /b ""</code> (или <code>start /b</code> если title уже был)</li>
+        <li>Подставляет <code>%~dp0</code>, <code>%~f0</code>, <code>%~n0</code> в абсолютные пути</li>
+        <li>Пишет результат <strong>рядом с оригиналом</strong> (не в %TEMP%), чтобы <code>%~dp0</code> работал</li>
+      </ul>
+
+      <h3>Стрим</h3>
+      <p>
+        <code>runStream</code> и <code>runCommandStream</code> шлют
+        <code>tweaks:stream-data</code> и <code>tweaks:stream-end</code>.
+        Рендерер подписывается на события и пишет в панель лога.
+      </p>
+
+      <h3>Кодировка</h3>
+      <p>
+        Вывод декодируется через UTF-8, при наличии <code>U+FFFD</code> —
+        fallback на <code>ibm866</code> (cp866). Это спасает старые .bat в OEM-кодировке.
+      </p>
+
+      <h3>Таймаут</h3>
+      <p>
+        По умолчанию 300 000 мс (5 минут). По истечении — <code>SIGKILL</code>
+        и <code>exit code -2</code>. Настраивается в Настройки → Интерфейс.
+      </p>
+    </section>
+
+    <!-- SOURCES -->
+    <section class="section" id="sources">
+      <div class="section-tag">Механика</div>
+      <h2>Источники и пары «твик ↔ отмена»</h2>
+      <p>Единый модуль <code>renderer/tabs/sources.js</code>.</p>
+
+      <h3>Форматы JSON</h3>
+      <p>Плоский (без категорий):</p>
+      <pre><code>{
+  "tabs": {
+    "Root":   ["Отключить X.bat", "Отключить Y.bat"],
+    "отмена": ["Включить X.bat", "Включить Y.bat"]
+  }
+}</code></pre>
+      <p>С категориями:</p>
+      <pre><code>{
+  "tabs": {
+    "Категория1": { "Root": [...], "отмена": [...] },
+    "Категория2": { "Root": [...], "отмена": [...] }
+  }
+}</code></pre>
+
+      <h3>flatCategories</h3>
+      <p>
+        Флаг у источника. Если <code>true</code> — файлы лежат прямо в
+        <code>baseDir</code>, категория в JSON — логическая метка.
+        Если <code>false</code> — путь <code>baseDir/Категория/file</code>.
+      </p>
+
+      <h3>Пары «твик ↔ отмена»</h3>
+      <p>
+        <code>buildPairMap(rootFiles, cancelFiles)</code> нормализует имена
+        через <code>coreName()</code>: убирает префиксы-глаголы
+        (включить, отключить, вернуть, восстановить, сбросить,
+        откатить, показать, скрыть, разблокировать, установить, …),
+        расширение и служебные символы.
+      </p>
+      <p>
+        Если core-имя совпало — рядом с карточкой появляется кнопка
+        <strong>↩</strong>, которая запускает парный файл.
+        Показ кнопок отмены настраивается (<code>show_cancel_buttons</code>).
+      </p>
+    </section>
+
+    <!-- PRELOAD -->
+    <section class="section" id="preload">
+      <div class="section-tag">Механика</div>
+      <h2>Preload и lazy-загрузка</h2>
+
+      <h3>PRELOAD_JOBS</h3>
+      <p>Список фоновых задач прогрева:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Ключ</th><th>Вкладка</th><th>Critical</th></tr></thead>
+          <tbody>
+            <tr><td>startup</td><td>startup</td><td>✓</td></tr>
+            <tr><td>apps</td><td>uninstaller</td><td>✓</td></tr>
+            <tr><td>audit_security</td><td>security</td><td>✓</td></tr>
+            <tr><td>audit_privacy</td><td>security</td><td>✓</td></tr>
+            <tr><td>audit_comfort</td><td>security</td><td>✓</td></tr>
+            <tr><td>firewall</td><td>security</td><td>—</td></tr>
+            <tr><td>netmon</td><td>security</td><td>—</td></tr>
+            <tr><td>cursors</td><td>customization</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>При старте грузятся только <code>critical</code>. Остальные — в фоне после открытия главной.</p>
+
+      <h3>Lazy-вкладки</h3>
+      <p>
+        <code>state.lazyTabs</code> (по умолчанию true). При переходе на
+        незагруженную вкладку показывается <code>.tab-loading-placeholder</code>
+        со спиннером, затем рендерер.
+      </p>
+      <p><code>ALWAYS_RERENDER</code> — вкладки без кеша: startup, uninstaller, customization, security.</p>
+
+      <h3>Кеш</h3>
+      <p>
+        <code>state.dataCache</code> — общий кеш. Сбрасывается кнопкой
+        «♻ Обновить» в топбаре или кнопками «🔄 Обновить» в самих вкладках.
+      </p>
+    </section>
+
+    <!-- CONFIG -->
+    <section class="section" id="config">
+      <div class="section-tag">Справочник</div>
+      <h2>Конфиг</h2>
+      <p>Файл: <code>extreme_data/settings.json</code>, UTF-8, debounce 250 мс.</p>
+      <pre><code>{
+  "General": {
+    "theme": "vampire_the_masquerade",
+    "ui_style": "material3",
+    "font_heading_latin": "Silkscreen",
+    "font_heading_cyr": "JetBrains Mono",
+    "font_body_latin": "JetBrains Mono",
+    "font_body_cyr": "JetBrains Mono",
+    "font_mono": "JetBrains Mono",
+    "heading_font_size": 15,
+    "body_font_size": 13,
+    "heading_font_weight": 700,
+    "body_font_weight": 400,
+    "corner_radius": 12,
+    "ui_density": "comfortable",
+    "visual_effect": "glass",
+    "sidebar_opacity": 40,
+    "unified_button_color": true,
+    "checkbox_display_mode": "rectangle",
+    "show_cancel_buttons": true,
+    "tweak_execution_mode": "nsudolg",
+    "tweak_timeout_ms": 300000,
+    "lazy_tabs": true,
+    "show_splash": true,
+    "preload_heavy_tabs": false,
+    "preload_audits": false,
+    "security_auto_audit": true,
+    "logs_enabled": false,
+    "netmon_host_mode": "none",
+    "initial_tab": "main"
+  },
+  "Window": { "fullscreen": false },
+  "Columns": { "default": 3 }
+}</code></pre>
+      <p>При старте: <code>mergeDeep(DEFAULTS, raw)</code> + <code>coerceToDefaults</code> — гарантирует, что все ключи и типы на месте. Лишние ключи сохраняются, но не используются.</p>
+    </section>
+
+    <!-- PORTABLE -->
+    <section class="section" id="portable">
+      <div class="section-tag">Справочник</div>
+      <h2>Portable mode</h2>
+      <p>Все данные — в <code>extreme_data/</code> рядом с exe:</p>
+      <pre><code>AntonVampire.exe
+extreme_data/
+├── settings.json
+├── logs/
+│   └── {user}_log_{ts}.log
+├── backgrounds/
+├── wallpapers/
+├── cursor_icons/
+├── cursors_cache/
+├── cursors_temp/
+├── config_backups/
+│   └── {app}/
+│       └── {ts}__{label}/
+└── electron_userdata/
+    ├── session/
+    ├── cache/
+    ├── chromium_logs/
+    └── crashDumps/</code></pre>
+      <p>
+        Реализация в <code>main.js → setupPortableMode()</code>.
+        Вызывается до <code>app.whenReady()</code>. Устанавливает
+        <code>app.setPath('userData', …)</code> и все подпути,
+        отключает breakpad/crashUpload/shaderCache.
+      </p>
+      <div class="callout success">
+        <div class="callout-icon">✓</div>
+        <div class="callout-body">
+          В <code>%APPDATA%</code> и <code>%LOCALAPPDATA%</code> ничего
+          не пишется. Можно запускать с флешки.
+        </div>
+      </div>
+    </section>
+
+    <!-- SHORTCUTS -->
+    <section class="section" id="shortcuts">
+      <div class="section-tag">Справочник</div>
+      <h2>Горячие клавиши</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Клавиша</th><th>Действие</th></tr></thead>
+          <tbody>
+            <tr><td><kbd>F1</kbd></td><td>Открыть сайт проекта</td></tr>
+            <tr><td><kbd>F5</kbd></td><td>Перезагрузить renderer (без перезапуска main)</td></tr>
+            <tr><td><kbd>F11</kbd></td><td>Fullscreen</td></tr>
+            <tr><td><kbd>Ctrl</kbd> + <kbd>F</kbd></td><td>Фокус в поиск</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Закрыть dropdown / меню</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="section-tag">FAQ</div>
+      <h2>Частые вопросы</h2>
+
+      <details>
+        <summary>Почему антивирус ругается?</summary>
+        <div>
+          <p>Три причины:</p>
+          <ul>
+            <li>Нет цифровой подписи (сертификат $300–500/год)</li>
+            <li>Приложение меняет реестр, службы и системные файлы — для антивируса это подозрительно</li>
+            <li>Приложение использует <code>NSudoLG.exe</code>, <code>PowerRun.exe</code>, <code>cmd.exe</code> — часто встречаются в malware</li>
+          </ul>
+          <p>Добавьте папку в исключения. Код открыт на GitHub.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Где хранятся настройки?</summary>
+        <div>
+          <p>В <code>extreme_data/settings.json</code> рядом с <code>AntonVampire.exe</code>. В AppData ничего не пишется.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Почему требует админа при каждом запуске?</summary>
+        <div>
+          <p>Приложение проверяет <code>fltmc</code> и, если прав нет, показывает диалог с кнопкой «Перезапустить» → <code>Start-Process -Verb RunAs</code> с флагом <code>--relaunch</code>.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Как сбросить все настройки?</summary>
+        <div>
+          <p>Настройки → О программе → «↺ Сбросить все настройки». Или удалите <code>extreme_data/settings.json</code> вручную.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Где взять сборщики JSON?</summary>
+        <div>
+          <p>Они лежат в корне проекта (рядом с <code>main.js</code>) или в релизном архиве. Запустить можно из Настройки → Утилиты. Требуется Python 3.8+ в PATH.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Как добавить свои твики?</summary>
+        <div>
+          <ol>
+            <li>Положите <code>.bat</code> / <code>.ps1</code> / <code>.exe</code> / <code>.reg</code> в нужную папку <code>tweaks/&lt;button&gt;/&lt;tab&gt;/</code></li>
+            <li>Добавьте описание в <code>tweaks/descriptions.txt</code> (формат <code>filename.bat=Описание</code>)</li>
+            <li>Откройте Настройки → Утилиты → <code>build_all_tabs.py</code> → «▶ Запустить»</li>
+            <li>Готово — твик появится во вкладке</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>Что такое Sapphire и почему он не работает?</summary>
+        <div>
+          <p>Sapphire — 4-й режим чекбоксов (2 колонки с раскрывающимся описанием). В текущей бете он <strong>пока не реализован</strong>: при выборе рендерится BoosterX. Классы <code>.cbx-sf*</code> в CSS уже есть, но <code>renderSapphire</code> в <code>checkbox.js</code> не написан.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Можно ли использовать без интернета?</summary>
+        <div>
+          <p>Да, всё локальное. Сеть нужна только для: загрузки курсоров с GitHub, скачивания обоев по URL, резолва IP в NetMon (если mode=brand).</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="section" id="troubleshooting">
+      <div class="section-tag">Troubleshooting</div>
+      <h2>Troubleshooting</h2>
+
+      <h3>Приложение не запускается</h3>
+      <ul>
+        <li>Проверьте, что запускаете от админа</li>
+        <li>Если UAC отменён — приложение закроется. Нажмите «Перезапустить» в диалоге</li>
+        <li>Включите <code>General.logs_enabled = true</code> в settings.json, посмотрите <code>extreme_data/logs/</code></li>
+      </ul>
+
+      <h3>Твик зависает</h3>
+      <ul>
+        <li>По умолчанию таймаут 5 мин. Увеличьте в Настройки → Интерфейс</li>
+        <li>Возможен конфликт с антивирусом — добавьте папку в исключения</li>
+        <li>Попробуйте сменить режим запуска: <code>nsudolg</code> → <code>powerrun</code> → <code>cmd</code></li>
+      </ul>
+
+      <h3>Кракозябры в логе</h3>
+      <p>
+        Твик выводит в OEM-кодировке (cp866). Приложение пытается декодировать
+        UTF-8, при ошибке — fallback на cp866. Если кракозябры всё равно —
+        пересохраните .bat в UTF-8 через Notepad++.
+      </p>
+
+      <h3>Открывается окно консоли при запуске твика</h3>
+      <p>
+        В .bat есть <code>start</code>. Приложение патчит его на
+        <code>start /b ""</code> перед запуском. Если окно всё равно
+        открывается — вероятно, внутри вызывается внешний .exe или
+        используется <code>start cmd</code> (это игнорируется).
+      </p>
+
+      <h3>Не работает поиск</h3>
+      <p>
+        Поиск фильтрует только по <code>name</code> чекбоксов на текущей вкладке.
+        Для глобального поиска введите запрос в <code>#global-search</code>
+        в топбаре. Кэш описаний сбрасывается кнопкой «♻ Обновить».
+      </p>
+
+      <h3>Курсоры не применяются</h3>
+      <ul>
+        <li>Убедитесь, что в архиве есть <code>.cur</code>/<code>.ani</code></li>
+        <li>Проверьте, что папка <code>C:\Windows\Cursors\&lt;name&gt;\</code> создана</li>
+        <li>Попробуйте «▶️ Применить» ещё раз — иногда Windows не применяет с первого раза</li>
+        <li>Сбросьте всё через «🗑️ Удалить все»</li>
+      </ul>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div class="callout-body">
+          <strong>Логи:</strong> включите <code>logs_enabled</code> в настройках.
+          Файлы появятся в <code>extreme_data/logs/{user}_log_{ts}.log</code>
+          и <code>{user}_errors_{ts}.log</code>. Ошибки также дублируются
+          в консоль.
+        </div>
+      </div>
+    </section>
+
+    <!-- LICENSE -->
+<section class="section" id="license">
+    <div class="section-tag">Правовая информация</div>
+    <h2>Лицензия</h2>
+  
+    <p>
+      Anton Vampire распространяется под
+      <strong>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+      (CC BY-NC-SA 4.0)</strong>.
+    </p>
+  
+    <div class="callout info">
+      <div class="callout-icon">📜</div>
+      <div class="callout-body">
+        <strong>Кратко:</strong> можно форкать, изменять и распространять —
+        но <strong>нельзя продавать</strong> и нельзя закрывать код производных
+        версий. Обязательно указывать авторство.
+      </div>
+    </div>
+  
+    <h3>Что разрешено</h3>
+    <ul>
+      <li>Форк репозитория и изменение кода</li>
+      <li>Распространение оригинальной и изменённой версии</li>
+      <li>Использование в личных и некоммерческих проектах</li>
+      <li>Создание сборок и модов на основе Anton Vampire (при сохранении лицензии)</li>
+    </ul>
+  
+    <h3>Что запрещено</h3>
+    <ul>
+      <li>Продажа приложения, форков или платного доступа к ним</li>
+      <li>Коммерческое использование без письменного разрешения автора</li>
+      <li>Закрытие кода производных версий (ShareAlike требует ту же лицензию)</li>
+      <li>Удаление уведомлений об авторстве и лицензии</li>
+    </ul>
+  
+    <h3>Сторонние ресурсы</h3>
+    <p>
+      Anton Vampire агрегирует ресурсы с собственными лицензиями. Они
+      <strong>не</strong> перелицензируются под CC BY-NC-SA 4.0:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ресурс</th><th>Лицензия</th><th>Что это значит</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Papirus icons</td>
+            <td>GPL-3.0 / LGPL-3.0 / CC-BY-SA-4.0</td>
+            <td>При распространении нужно раскрыть исходники иконок и сохранить их лицензию.</td>
+          </tr>
+          <tr>
+            <td>XOS / SOS / IMOS tweaks</td>
+            <td>Лицензии авторов сборок</td>
+            <td>Твики остаются под условиями их создателей. Anton Vampire не претендует на них.</td>
+          </tr>
+          <tr>
+            <td>Utils/ (PowerRun, NSudoLG, 7z, launcher)</td>
+            <td>Собственные лицензии</td>
+            <td>Утилиты распространяются «как есть» под своими лицензиями.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <h3>Полный текст</h3>
+    <p>
+      Юридически значимый текст лицензии лежит в файле <code>LICENSE</code>
+      в корне репозитория. Он также доступен онлайн:
+    </p>
+    <ul>
+      <li><a href="https://github.com/anton18-png/Anton-Vampire/blob/main/LICENSE" target="_blank" rel="noopener">LICENSE на GitHub</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode" target="_blank" rel="noopener">Официальный юридический текст CC BY-NC-SA 4.0</a></li>
+      <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Краткое описание на сайте Creative Commons</a></li>
+    </ul>
+  
+    <div class="callout warn">
+      <div class="callout-icon">⚠</div>
+      <div class="callout-body">
+        <strong>Коммерческое использование</strong> (включая продажу, платную
+        поддержку, размещение за платным доступом, включение в платные сборки)
+        допускается только с <strong>письменного разрешения</strong> автора.
+        Для запроса напишите в Telegram
+        <a href="https://t.me/all_tweaker" target="_blank" rel="noopener">@all_tweaker</a>.
+      </div>
+    </div>
+  </section>
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">
+    <span class="bat">🩸</span>
+    <span>ANTON VAMPIRE</span>
+  </div>
+  <div class="footer-meta">
+    <div>© 2026 Anton18-PNG · v1.0.0-beta</div>
+    <div>Документация · Material You · Vapor Theme</div>
+  </div>
+</footer>
+
+<script>
+/* ============ Scrollspy ============ */
+const sections = document.querySelectorAll('section[id]');
+const tocLinks = document.querySelectorAll('.toc a');
+
+const spy = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => spy.observe(s));
+
+/* ============ Smooth scroll for TOC ============ */
+tocLinks.forEach(a => {
+  a.addEventListener('click', (e) => {
+    const href = a.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    const top = target.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+    sidebar.classList.remove('open');
+    history.replaceState(null, '', href);
+  });
+});
+
+/* ============ Mobile TOC ============ */
+const mobileTocBtn = document.getElementById('mobileTocBtn');
+const sidebar = document.getElementById('sidebar');
+mobileTocBtn?.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+/* ============ Smooth scroll for TOC ============ */
+document.querySelectorAll('.toc a').forEach(a => {
+  a.addEventListener('click', () => {
+    if (window.innerWidth <= 1024) sidebar.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
