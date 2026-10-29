@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/github/v/release/anton18-png/Anton-Vampire?include_prereleases&style=for-the-badge&label=version&color=ea38b8" alt="Version" />
   </a>
   <a href="https://github.com/anton18-png/Anton-Vampire/releases">
-    <img src="https://img.shields.io/github/downloads/anton18-png/Anton-Vampire/total?style=for-the-badge&label=downloads&color=32fbe2" alt="Downloads" />
+    <img src="https://img.shields.io/github/downloads/scode18/All-Tweaker/total?style=for-the-badge&label=downloads&color=32fbe2" alt="Downloads" />
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-6e40c0?style=for-the-badge" alt="License" />
