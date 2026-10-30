@@ -1,10 +1,10 @@
 {
   "name": "extreme-tweaker",
-  "version": "1.0.0-beta",
+  "version": "1.0.2-beta",
   "description": "Anton Vampire — Windows optimizer",
   "main": "main.js",
   "author": "Anton18-PNG",
-  "homepage": "https://anton18-png.github.io/Extreme/",
+  "homepage": "https://anton18-png.github.io/Anton-Vampire/web/index.html",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
