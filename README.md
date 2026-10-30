@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/github/v/release/anton18-png/Anton-Vampire?include_prereleases&style=for-the-badge&label=version&color=ea38b8" alt="Version" />
   </a>
   <a href="https://github.com/anton18-png/Anton-Vampire/releases">
-    <img src="https://img.shields.io/github/downloads/scode18/All-Tweaker/total?style=for-the-badge&label=downloads&color=32fbe2" alt="Downloads" />
+    <img src="https://img.shields.io/github/downloads/anton18-png/Anton-Vampire/total?style=for-the-badge&label=downloads&color=32fbe2" alt="Downloads" />
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-6e40c0?style=for-the-badge" alt="License" />
@@ -23,10 +23,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Setup.1.0.0-beta.exe">
+  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.1-beta/Anton.Vampire.Setup.1.0.1-beta.exe">
     <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
   </a>
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Portable.rar">
+  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.1-beta/Anton.Vampire.Portable.rar">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
   </a>
 </p>
@@ -96,7 +96,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Setup.1.0.0-beta.exe)
+[**Скачать Setup .exe →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.1-beta/Anton.Vampire.Setup.1.0.1-beta.exe)
 
 </td>
 <td align="center" width="50%">
@@ -104,7 +104,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.1-beta/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -115,7 +115,7 @@
 Откройте `cmd` (Win+R → cmd) и вставьте:
 
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.0-beta/Anton.Vampire.Setup.1.0.0-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.1-beta/Anton.Vampire.Setup.1.0.1-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
@@ -478,7 +478,7 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 ---
 
 <p align="center">
-  <b>🩸 Anton Vampire</b> · v1.0.0-beta · 2026<br/>
+  <b>🩸 Anton Vampire</b> · v1.0.1-beta · 2026<br/>
   <sub>Windows 10/11 · Electron 44 · Material You · Vapor Theme</sub><br/>
   <sub>Made with ❤️ by <a href="https://github.com/anton18-png">Anton18-PNG</a></sub>
 </p>
