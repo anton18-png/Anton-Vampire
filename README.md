@@ -96,7 +96,7 @@
 ### 📥 Setup
 Установщик NSIS, ярлык в меню Пуск, автозапуск от админа.
 
-[**Скачать Setup .exe →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.2-beta/Anton.Vampire.Setup.1.0.2-beta.exe)
+[**Скачать Setup .exe →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.3-beta/Anton.Vampire.Setup.1.0.3-beta.exe)
 
 </td>
 <td align="center" width="50%">
@@ -104,7 +104,7 @@
 ### 📦 Portable
 Архив `.rar`, без установки, всё в `extreme_data/`.
 
-[**Скачать Portable .rar →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.2-beta/Anton.Vampire.Portable.rar)
+[**Скачать Portable .rar →**](https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.3-beta/Anton.Vampire.Portable.rar)
 
 </td>
 </tr>
@@ -115,7 +115,7 @@
 Откройте `cmd` (Win+R → cmd) и вставьте:
 
 ```cmd
-curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.2-beta/Anton.Vampire.Setup.1.0.2-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
+curl -g -k -L -# -o "%temp%\AntonVampire.Setup.exe" "https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.3-beta/Anton.Vampire.Setup.1.0.3-beta.exe" && start "" "%temp%\AntonVampire.Setup.exe"
 ```
 
 ### Из исходников
@@ -478,7 +478,7 @@ Anton Vampire **агрегирует** ресурсы с собственным�
 ---
 
 <p align="center">
-  <b>🩸 Anton Vampire</b> · v1.0.2-beta · 2026<br/>
+  <b>🩸 Anton Vampire</b> · v1.0.3-beta · 2026<br/>
   <sub>Windows 10/11 · Electron 44 · Material You · Vapor Theme</sub><br/>
   <sub>Made with ❤️ by <a href="https://github.com/anton18-png">Anton18-PNG</a></sub>
 </p>

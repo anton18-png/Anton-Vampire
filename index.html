@@ -223,11 +223,11 @@
       50%      { opacity: 1;   transform: scale(1.3); }
     }
   </style>
-
-  <!-- Шрифты подключаем статически -->
+  <!-- 1. Шрифты -->
   <link rel="stylesheet" href="src/styles/fonts.css" />
-  <!-- CSS-стиль (default/pixel/kitty/material3) подключается
-       динамически из app.js → applyStyle() -->
+  
+  <!-- 2. CSS-стиль (default/pixel/kitty/material3) подключается
+       динамически из app.js → applyStyle() (он перезапишет только цвета, тени и рамки) -->
 </head>
 <body data-theme="material3">
 
@@ -297,7 +297,7 @@
           <div class="brand">
             <span class="logo">🩸</span>
             <h1 id="app-title">Anton Vampire</h1>
-            <span id="app-version" class="badge">v4 Beta</span>
+            <span id="app-version" class="badge">v1.0.3 Beta</span>
           </div>
 
           <div class="top-actions">

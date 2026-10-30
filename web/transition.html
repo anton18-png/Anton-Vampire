@@ -5,508 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Переход: Extreme Tweaker → Anton Vampire</title>
 <meta name="description" content="Полный разбор перехода: что изменилось в архитектуре, стеке, конфиге, UI, темах, шрифтах, запуске твиков." />
-
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-<style>
-/* ============================================================
-   Shared design tokens (Vapor × Material You)
-   ============================================================ */
-:root {
-  --bg: #190831; --bg-deep: #0f0420; --bg-alt: #22103d;
-  --card: #2a1752; --card-hover: #33205f;
-  --border: #6e40c0; --border-soft: rgba(110, 64, 192, 0.35); --border-hard: rgba(110, 64, 192, 0.55);
-  --fg: #e6d9f5; --fg-muted: #a39ec4;
-  --mint: #32fbe2; --accent: #ea38b8; --accent2: #6e40c0; --accent-3: #b01a8b;
-  --success: #3af180; --warning: #ffbd05; --danger: #e34b54; --info: #1da2f2;
-  --glow-pink: rgba(234, 56, 184, 0.45);
-  --r-xs: 8px; --r-sm: 12px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px; --r-full: 9999px;
-  --font-display: 'Outfit', system-ui, sans-serif;
-  --font-body: 'Outfit', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Cascadia Mono', Consolas, monospace;
-  --ease: cubic-bezier(0.2, 0, 0, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-1: 150ms; --dur-2: 250ms; --dur-3: 400ms;
-  --container: 1200px; --gutter: 24px;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-*::selection { background: var(--accent); color: var(--bg-deep); }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-body);
-  font-size: 16px; line-height: 1.65;
-  background: var(--bg); color: var(--fg);
-  min-height: 100vh; overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  position: relative;
-}
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse at 15% 0%, rgba(234, 56, 184, 0.10), transparent 55%),
-    radial-gradient(ellipse at 85% 100%, rgba(110, 64, 192, 0.14), transparent 55%),
-    radial-gradient(ellipse at 50% 50%, rgba(25, 8, 49, 0), var(--bg-deep) 130%);
-  z-index: -2; pointer-events: none;
-}
-.orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: -1; animation: orb-float 22s ease-in-out infinite; }
-.orb.pink   { width: 480px; height: 480px; background: rgba(234, 56, 184, 0.20); top: -160px; right: -120px; }
-.orb.purple { width: 560px; height: 560px; background: rgba(110, 64, 192, 0.20); bottom: -200px; left: -140px; animation-delay: -8s; }
-@keyframes orb-float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(40px, -30px) scale(1.06); }
-  66% { transform: translate(-30px, 40px) scale(0.96); }
-}
-.grid-bg {
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(50, 251, 226, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(50, 251, 226, 0.025) 1px, transparent 1px);
-  background-size: 48px 48px; z-index: -1; pointer-events: none;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
-}
-.grain {
-  position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-}
-
-.container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
-
-h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; letter-spacing: -0.02em; font-weight: 800; }
-h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
-h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
-h3 { font-size: clamp(1.15rem, 2vw, 1.5rem); }
-p { color: var(--fg-muted); }
-a { color: var(--mint); text-decoration: none; transition: color var(--dur-1); }
-a:hover { color: var(--accent); }
-code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); background: rgba(50, 251, 226, 0.08); padding: 2px 6px; border-radius: 4px; }
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--mint) 45%, var(--accent2) 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
-  animation: grad-shift 8s ease infinite;
-}
-@keyframes grad-shift {
-  0%, 100% { background-position: 0% center; }
-  50% { background-position: 100% center; }
-}
-
-/* ---------- Nav ---------- */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(25, 8, 49, 0.55);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border-bottom: 1px solid transparent;
-  transition: all var(--dur-2) var(--ease);
-}
-.nav.scrolled {
-  background: rgba(15, 4, 32, 0.88);
-  border-bottom-color: var(--border-soft);
-}
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 24px; height: 68px;
-  max-width: var(--container); margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-.nav-logo {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-display); font-weight: 800;
-  font-size: 1.05rem; letter-spacing: 0.05em; color: var(--fg);
-}
-.nav-logo .bat { font-size: 1.35rem; filter: drop-shadow(0 0 8px var(--glow-pink)); }
-.nav-logo .brand {
-  background: linear-gradient(90deg, var(--accent), var(--mint));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.nav-links {
-  display: flex; align-items: center; gap: 4px;
-  list-style: none; flex: 1; justify-content: center;
-}
-.nav-links a {
-  display: inline-flex; padding: 8px 16px;
-  border-radius: var(--r-full); color: var(--fg-muted);
-  font-size: 0.9rem; font-weight: 500;
-  transition: all var(--dur-1) var(--ease);
-}
-.nav-links a:hover { background: rgba(110, 64, 192, 0.18); color: var(--fg); }
-.nav-links a.active { background: rgba(50, 251, 226, 0.1); color: var(--mint); }
-.nav-actions { display: flex; align-items: center; gap: 8px; }
-.nav-badge {
-  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
-  padding: 4px 10px; border-radius: var(--r-full);
-  background: rgba(234, 56, 184, 0.12); color: var(--accent);
-  border: 1px solid rgba(234, 56, 184, 0.35);
-}
-
-/* ---------- Buttons ---------- */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 8px; padding: 12px 24px;
-  border-radius: var(--r-full);
-  font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
-  border: 1px solid transparent; cursor: pointer;
-  transition: all var(--dur-2) var(--ease);
-  text-decoration: none; white-space: nowrap;
-}
-.btn-filled {
-  background: linear-gradient(135deg, var(--accent), var(--accent-3));
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(234, 56, 184, 0.35);
-}
-.btn-filled:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(234, 56, 184, 0.5); color: #fff; }
-.btn-outlined { background: transparent; color: var(--mint); border-color: rgba(50, 251, 226, 0.35); }
-.btn-outlined:hover { background: rgba(50, 251, 226, 0.08); border-color: var(--mint); color: var(--mint); }
-.btn-sm { padding: 8px 16px; font-size: 0.82rem; }
-
-/* ---------- Hero ---------- */
-.hero {
-  padding: 140px 0 64px;
-  position: relative; text-align: center;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px; border-radius: var(--r-full);
-  background: rgba(50, 251, 226, 0.08);
-  border: 1px solid rgba(50, 251, 226, 0.25);
-  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600;
-  color: var(--mint); margin-bottom: 28px; letter-spacing: 0.05em;
-}
-.hero h1 { margin-bottom: 20px; letter-spacing: -0.03em; }
-.hero-sub {
-  font-size: 1.1rem; color: var(--fg-muted);
-  max-width: 720px; margin: 0 auto 40px; line-height: 1.7;
-}
-
-/* ---------- Version comparison ---------- */
-.vs {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 24px;
-  align-items: stretch;
-  margin: 56px 0;
-}
-.vs-card {
-  padding: 32px;
-  border-radius: var(--r-xl);
-  background: rgba(42, 23, 82, 0.5);
-  border: 1px solid var(--border-soft);
-  position: relative;
-}
-.vs-card.old {
-  border-color: rgba(110, 64, 192, 0.4);
-}
-.vs-card.new {
-  border-color: rgba(234, 56, 184, 0.55);
-  background:
-    radial-gradient(circle at top right, rgba(234, 56, 184, 0.14), transparent 60%),
-    rgba(42, 23, 82, 0.6);
-  box-shadow: 0 0 64px rgba(234, 56, 184, 0.12);
-}
-.vs-arrow {
-  display: flex; align-items: center; justify-content: center;
-  font-size: 3rem;
-  color: var(--accent);
-  text-shadow: 0 0 24px var(--glow-pink);
-  animation: arrow-bounce 2s ease-in-out infinite;
-}
-@keyframes arrow-bounce {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(8px); }
-}
-.vs-title {
-  font-family: var(--font-display);
-  font-size: 1.35rem; font-weight: 800;
-  margin-bottom: 6px;
-}
-.vs-card.old .vs-title { color: var(--fg-muted); }
-.vs-card.new .vs-title { color: var(--mint); }
-.vs-meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--fg-muted);
-  margin-bottom: 24px;
-  letter-spacing: 0.05em;
-}
-.vs-list {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.vs-list li {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--fg);
-  padding-left: 22px;
-  position: relative;
-}
-.vs-list li::before {
-  content: '▸';
-  position: absolute; left: 0;
-  color: var(--accent2);
-  font-weight: 700;
-}
-.vs-card.new .vs-list li::before { color: var(--mint); }
-
-/* ---------- Sections ---------- */
-.section { padding: 80px 0; position: relative; }
-.section-head {
-  max-width: 780px; margin: 0 auto 56px;
-  text-align: center;
-}
-.eyebrow {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--mint);
-  padding: 6px 14px;
-  border-radius: var(--r-full);
-  background: rgba(50, 251, 226, 0.08);
-  border: 1px solid rgba(50, 251, 226, 0.25);
-  margin-bottom: 20px;
-}
-.section-title {
-  margin-bottom: 16px;
-  color: var(--fg);
-}
-.section-desc { font-size: 1.05rem; color: var(--fg-muted); }
-
-/* ---------- Diff table ---------- */
-.diff-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  border: 1px solid var(--border-soft);
-  background: rgba(42, 23, 82, 0.45);
-  font-size: 0.92rem;
-}
-.diff-table thead th {
-  background: rgba(15, 4, 32, 0.7);
-  padding: 16px 20px;
-  text-align: left;
-  font-family: var(--font-display);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--mint);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--border-soft);
-}
-.diff-table tbody td {
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(110, 64, 192, 0.15);
-  color: var(--fg);
-  vertical-align: top;
-}
-.diff-table tbody tr:last-child td { border-bottom: none; }
-.diff-table tbody tr:hover { background: rgba(110, 64, 192, 0.08); }
-.diff-table tbody td:first-child {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--fg-muted);
-  width: 22%;
-}
-.diff-table .old-val { color: var(--fg-muted); }
-.diff-table .new-val { color: var(--fg); }
-.diff-table .added   { color: var(--success); }
-.diff-table .removed { color: var(--danger); }
-.diff-table .changed { color: var(--warning); }
-.diff-table code { font-size: 0.82em; }
-
-/* ---------- Cards grid ---------- */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-.card {
-  padding: 28px;
-  border-radius: var(--r-lg);
-  background: rgba(42, 23, 82, 0.5);
-  border: 1px solid var(--border-soft);
-  transition: all var(--dur-2) var(--ease);
-}
-.card:hover {
-  border-color: var(--border-hard);
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px -16px rgba(0,0,0,0.5);
-}
-.card-icon { font-size: 1.75rem; margin-bottom: 12px; }
-.card-title {
-  font-family: var(--font-display);
-  font-size: 1.1rem; font-weight: 700;
-  color: var(--fg); margin-bottom: 8px;
-}
-.card-desc { font-size: 0.92rem; color: var(--fg-muted); line-height: 1.55; margin: 0; }
-
-/* ---------- Removed/added lists ---------- */
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.list-box {
-  padding: 28px;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--border-soft);
-  background: rgba(42, 23, 82, 0.4);
-}
-.list-box.removed { border-color: rgba(227, 75, 84, 0.4); }
-.list-box.added   { border-color: rgba(58, 241, 128, 0.4); }
-.list-box h3 {
-  font-size: 1.1rem;
-  margin-bottom: 16px;
-  display: flex; align-items: center; gap: 8px;
-}
-.list-box.removed h3 { color: var(--danger); }
-.list-box.added h3 { color: var(--success); }
-.list-box ul {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 8px;
-}
-.list-box li {
-  padding-left: 18px;
-  position: relative;
-  font-size: 0.9rem;
-  color: var(--fg);
-  line-height: 1.5;
-}
-.list-box.removed li::before {
-  content: '✕';
-  position: absolute; left: 0;
-  color: var(--danger);
-  font-weight: 700;
-}
-.list-box.added li::before {
-  content: '✓';
-  position: absolute; left: 0;
-  color: var(--success);
-  font-weight: 700;
-}
-
-/* ---------- Architecture ---------- */
-.arch {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.arch-box {
-  padding: 28px;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--border-soft);
-  background: rgba(15, 4, 32, 0.6);
-}
-.arch-box h3 {
-  font-size: 1rem;
-  color: var(--mint);
-  margin-bottom: 16px;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
-.arch-tree {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  line-height: 1.75;
-  white-space: pre;
-  overflow-x: auto;
-  color: var(--fg);
-}
-.arch-tree .dir  { color: var(--mint); }
-.arch-tree .file { color: var(--fg-muted); }
-.arch-tree .core { color: var(--accent); font-weight: 600; }
-
-/* ---------- CTA ---------- */
-.cta {
-  padding: 56px 40px;
-  border-radius: var(--r-xl);
-  background:
-    radial-gradient(ellipse at top right, rgba(234, 56, 184, 0.18), transparent 60%),
-    radial-gradient(ellipse at bottom left, rgba(110, 64, 192, 0.2), transparent 60%),
-    rgba(42, 23, 82, 0.6);
-  border: 1px solid var(--border-hard);
-  text-align: center;
-  margin-top: 80px;
-}
-.cta h2 { margin-bottom: 12px; }
-.cta p { margin-bottom: 32px; font-size: 1.05rem; }
-.cta-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-
-/* ---------- Footer ---------- */
-.footer {
-  padding: 48px 0 32px;
-  border-top: 1px solid var(--border-soft);
-  margin-top: 96px;
-  background: rgba(15, 4, 32, 0.5);
-}
-.footer-inner {
-  display: flex; flex-wrap: wrap;
-  justify-content: space-between; align-items: center;
-  gap: 24px;
-}
-.footer-brand {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-display); font-weight: 800;
-}
-.footer-brand .bat { font-size: 1.3rem; }
-.footer-meta {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--fg-muted);
-  text-align: right;
-}
-.footer-meta div { margin: 2px 0; }
-
-/* ---------- Reveal ---------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 1024px) {
-  .vs { grid-template-columns: 1fr; }
-  .vs-arrow { transform: rotate(90deg); }
-  .cards, .two-col, .arch { grid-template-columns: 1fr; }
-  .diff-table { font-size: 0.85rem; }
-  .diff-table thead th, .diff-table tbody td { padding: 10px 12px; }
-}
-@media (max-width: 768px) {
-  .nav-inner { height: 60px; }
-  .nav-links { display: none; }
-  .nav-badge { display: none; }
-  .section { padding: 56px 0; }
-  .hero { padding: 100px 0 40px; }
-  .cta { padding: 40px 24px; }
-  .footer-inner { flex-direction: column; text-align: center; }
-  .footer-meta { text-align: center; }
-  .diff-table tbody td:first-child { width: auto; }
-}
-</style>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<div class="orb pink"></div>
-<div class="orb purple"></div>
-<div class="grid-bg"></div>
-<div class="grain"></div>
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
@@ -521,34 +22,30 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
       <li><a href="https://github.com/anton18-png/Anton-Vampire" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
     <div class="nav-actions">
-      <span class="nav-badge">v1.0.2-beta</span>
+      <span class="nav-badge">v1.0.3-beta</span>
       <a href="index.html#download" class="btn btn-filled btn-sm">📥 Скачать</a>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<section class="hero" style="padding-bottom: 32px;">
   <div class="container">
     <div class="hero-badge">⚔ Полный разбор перехода</div>
     <h1>
       <span class="gradient-text">Extreme Tweaker</span>
-      <span style="color:var(--fg-muted);font-weight:300;">→</span>
+      <span style="color:var(--accent2);font-weight:300;">→</span>
       <span class="gradient-text">Anton Vampire</span>
     </h1>
-    <p class="hero-sub">
-      Один монолитный Python-скрипт на 5000 строк — и полностью
-      переписанное Electron-приложение на ~25 модулях. Ниже —
-      что именно поменялось, что удалено, что добавлено и почему.
+    <p class="hero-tagline" style="max-width: 800px; margin: 0 auto; text-align: center; border: none;">
+      Один монолитный Python-скрипт на 5000 строк — и полностью переписанное Electron-приложение на ~25 модулях. Ниже — что именно поменялось, что удалено, что добавлено и почему.
     </p>
   </div>
 </section>
 
-<!-- VS -->
 <section class="section" style="padding-top: 0;">
   <div class="container">
     <div class="vs">
-      <div class="vs-card old reveal">
+      <div class="vs-card old">
         <div class="vs-title">Extreme Tweaker</div>
         <div class="vs-meta">v3.7.3.5 / v4 Beta · Python · tkinter</div>
         <ul class="vs-list">
@@ -567,9 +64,9 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
 
       <div class="vs-arrow">➜</div>
 
-      <div class="vs-card new reveal">
+      <div class="vs-card new">
         <div class="vs-title">Anton Vampire</div>
-        <div class="vs-meta">v1.0.2-beta · Electron 44 · Node.js</div>
+        <div class="vs-meta">v1.0.3-beta · Electron 44 · Node.js</div>
         <ul class="vs-list">
           <li>Никаких внешних зависимостей — всё в бандле</li>
           <li>electron-builder → NSIS installer</li>
@@ -587,14 +84,13 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
   </div>
 </section>
 
-<!-- STACK -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">1 · Стек</span>
-      <h2 class="section-title">Технологический стек</h2>
+    <div class="section-head">
+      <span class="section-eyebrow">1 · Стек</span>
+      <h2>Технологический стек</h2>
     </div>
-    <table class="diff-table reveal">
+    <table class="diff-table">
       <thead>
         <tr><th>Аспект</th><th>Было</th><th>Стало</th></tr>
       </thead>
@@ -613,20 +109,16 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
   </div>
 </section>
 
-<!-- ARCHITECTURE -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">2 · Архитектура</span>
-      <h2 class="section-title">Из монолита — в модули</h2>
-      <p class="section-desc">
-        Один файл на 5000 строк → 5 модулей main-процесса + ~20 модулей
-        рендерера. Появилась чёткая граница main / preload / renderer.
-      </p>
+    <div class="section-head">
+      <span class="section-eyebrow">2 · Архитектура</span>
+      <h2>Из монолита — в модули</h2>
+      <p>Один файл на 5000 строк → 5 модулей main-процесса + ~20 модулей рендерера.</p>
     </div>
 
     <div class="arch">
-      <div class="arch-box reveal">
+      <div class="arch-box">
         <h3>Extreme Tweaker</h3>
         <div class="arch-tree"><span class="dir">main.py</span>          <span class="file">← монолит, ~5000 строк</span>
 <span class="dir">start.py</span>         <span class="file">← обёртка, телеметрия</span>
@@ -641,7 +133,7 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
 </div>
       </div>
 
-      <div class="arch-box reveal">
+      <div class="arch-box">
         <h3>Anton Vampire</h3>
         <div class="arch-tree"><span class="core">main.js</span>          <span class="file">← точка входа</span>
 <span class="core">preload.js</span>       <span class="file">← contextBridge</span>
@@ -667,14 +159,13 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
   </div>
 </section>
 
-<!-- CONFIG + DATA -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">3 · Конфиг и данные</span>
-      <h2 class="section-title">JSON с дебаунсом вместо INI в cp1251</h2>
+    <div class="section-head">
+      <span class="section-eyebrow">3 · Конфиг и данные</span>
+      <h2>JSON с дебаунсом вместо INI в cp1251</h2>
     </div>
-    <table class="diff-table reveal">
+    <table class="diff-table">
       <thead>
         <tr><th>Аспект</th><th>Extreme Tweaker</th><th>Anton Vampire</th></tr>
       </thead>
@@ -687,56 +178,42 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
         <tr><td>Миграции</td><td class="old-val">добавление отсутствующих ключей</td><td class="new-val">deep-merge с DEFAULTS</td></tr>
         <tr><td>Твики</td><td class="old-val">Python-словари в tabs_beta.py</td><td class="new-val">внешние JSON + генераторы build_*.py</td></tr>
         <tr><td>Бэкапы</td><td class="old-val">только реестр вручную</td><td class="new-val">config_backups/&lt;app&gt;/&lt;ts&gt;__&lt;label&gt;</td></tr>
-        <tr><td>Курсоры</td><td class="old-val">нет</td><td class="new-val">cursors_cache/ + cursor_icons/</td></tr>
-        <tr><td>Обои</td><td class="old-val">нет</td><td class="new-val">backgrounds/ + wallpapers/</td></tr>
-        <tr><td>Логи</td><td class="old-val">user_data/logs/*.log</td><td class="new-val">extreme_data/logs/{user}_log_{ts}.log</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- THEMES + FONTS -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">4 · Темы и шрифты</span>
-      <h2 class="section-title">Один шрифт → 6 слотов. 7 тем → 80</h2>
+    <div class="section-head">
+      <span class="section-eyebrow">4 · Темы и шрифты</span>
+      <h2>Один шрифт → 6 слотов. 7 тем → 80</h2>
     </div>
-    <table class="diff-table reveal">
+    <table class="diff-table">
       <thead>
         <tr><th>Аспект</th><th>Было</th><th>Стало</th></tr>
       </thead>
       <tbody>
         <tr><td>Темы</td><td class="old-val">~7 кастомных + ttkbootstrap</td><td class="new-val">~80 в 10 группах (<code>THEMES_META.groups</code>)</td></tr>
-        <tr><td>Группы</td><td class="old-val">нет</td><td class="new-val">Material 3, светлые, тёмные-от-светлых, ttkbootstrap, от разработчика, от Антона, от Русланчика, новые, Curated 2.0, игровые</td></tr>
+        <tr><td>Группы</td><td class="old-val">нет</td><td class="new-val">Material 3, светлые, тёмные-от-светлых, ttkbootstrap, от разработчика, от Антона и т.д.</td></tr>
         <tr><td>Тема по умолчанию</td><td class="old-val">boosterxvapor</td><td class="new-val">vampire_the_masquerade</td></tr>
         <tr><td>Применение</td><td class="old-val">theme_var + перезапуск</td><td class="new-val">applyTheme() без перезапуска</td></tr>
-        <tr><td>Превью</td><td class="old-val">нет</td><td class="new-val">theme-preview 2×2</td></tr>
-        <tr><td>Игровые темы</td><td class="old-val">нет</td><td class="new-val">vampire, CS 1.6, CS2, diablo</td></tr>
         <tr><td>Модель шрифтов</td><td class="old-val">font_family + font_size</td><td class="new-val">3 роли × 2 алфавита (heading/body/mono × latin/cyr)</td></tr>
         <tr><td>Веса</td><td class="old-val">не регулируются</td><td class="new-val">слайдеры 100–900 для heading и body</td></tr>
-        <tr><td>Variable-шрифты</td><td class="old-val">нет</td><td class="new-val">Inter, JetBrains Mono, Ubuntu Sans</td></tr>
         <tr><td>Файлы</td><td class="old-val">системные шрифты</td><td class="new-val">локальные .woff2 в assets/fonts/</td></tr>
-        <tr><td>Инъекция</td><td class="old-val">update_font_style() переустанавливает ttk</td><td class="new-val">applyFonts() → &lt;style id="__dynamic_fonts__"&gt;</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- TWEAK RUNNER -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">5 · Запуск твиков</span>
-      <h2 class="section-title">Патчинг .bat и nsudolg</h2>
-      <p class="section-desc">
-        Самое большое улучшение в раннере: убраны окна консоли,
-        вырезаются <code>pause</code>/<code>timeout</code>/<code>choice</code>,
-        <code>start</code> → <code>start /b</code>. Плюс новый режим через
-        NSudoLG (TrustedInstaller).
-      </p>
+    <div class="section-head">
+      <span class="section-eyebrow">5 · Запуск твиков</span>
+      <h2>Патчинг .bat и nsudolg</h2>
+      <p>Самое большое улучшение в раннере: убраны окна консоли, вырезаются <code>pause</code>/<code>timeout</code>/<code>choice</code>.</p>
     </div>
-    <table class="diff-table reveal">
+    <table class="diff-table">
       <thead>
         <tr><th>Аспект</th><th>Было</th><th>Стало</th></tr>
       </thead>
@@ -744,29 +221,25 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
         <tr><td>Режимы</td><td class="old-val">default, no_launcher, launcher, powerrun, cmd, create_config_and_run</td><td class="new-val">default, no_launcher, launcher, powerrun, <span class="added">nsudolg</span>, cmd</td></tr>
         <tr><td>create_config_and_run</td><td class="old-val">есть</td><td class="removed">удалён</td></tr>
         <tr><td>nsudolg</td><td class="removed">нет</td><td class="added">NSudoLG.exe + TrustedInstaller</td></tr>
-        <tr><td>Патчинг .bat</td><td class="removed">нет</td><td class="added">_makePatchedBat: pause/timeout/choice/echo off/chcp, start → start /b, %~dp0/%~f0/%~n0</td></tr>
-        <tr><td>Стрим вывода</td><td class="old-val">через logger или print</td><td class="new-val">runStream + runCommandStream через IPC</td></tr>
+        <tr><td>Патчинг .bat</td><td class="removed">нет</td><td class="added">_makePatchedBat: pause/timeout/choice/echo off/chcp, start → start /b</td></tr>
         <tr><td>Таймаут</td><td class="removed">нет</td><td class="added">General.tweak_timeout_ms (300 000 мс)</td></tr>
         <tr><td>Кодировка</td><td class="old-val">предполагалась UTF-8</td><td class="new-val">UTF-8 → fallback cp866 (decoderCp866)</td></tr>
-        <tr><td>Мусор</td><td class="removed">нет</td><td class="added">cleanOrphanTempBats() при старте</td></tr>
         <tr><td>Path resolution</td><td class="old-val">f"tweaks\\{button_name}\\{tab_name}\\{name}"</td><td class="new-val">tweakRunner.resolveSafe() + проверка выхода за rootDir</td></tr>
-        <tr><td>descriptions.txt</td><td class="old-val">ToolTip.find_description</td><td class="new-val">findDescription + кэш с mtime-проверкой</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- REMOVED / ADDED -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">6 · Что убрано / что добавлено</span>
-      <h2 class="section-title">Удалённое и новое</h2>
+    <div class="section-head">
+      <span class="section-eyebrow">6 · Что убрано / что добавлено</span>
+      <h2>Удалённое и новое</h2>
     </div>
 
     <div class="two-col">
-      <div class="list-box removed reveal">
-        <h3>✕ Удалено</h3>
+      <div class="list-box removed">
+        <h3>Удалено</h3>
         <ul>
           <li>Telegram-телеметрия (telebot)</li>
           <li>Автообновление через curl + -ppass</li>
@@ -774,21 +247,15 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
           <li>Реклама (open_random_site, donat_button)</li>
           <li>Хардкод author_configs / tweaker_configs</li>
           <li>Статические tabs_main / tabs / tabs_1…tabs_6</li>
-          <li>tabs_update / tabs_qqnwr / tabs_mini / tabs_uninstall</li>
           <li>developer_tools.py (часть → buildTools IPC)</li>
           <li>ps2batch.py, make.py, update_tabs_beta.py</li>
           <li>user.py (темы → themes.js)</li>
-          <li>HARDCORE_SERVICES / RECOMMENDED_SERVICES (частично)</li>
           <li>create_config_and_run</li>
-          <li>fullscreen_var / update_fullscreen</li>
-          <li>show_top_panel / show_sidebar (панели фиксированы)</li>
-          <li>frames_instead_of_tabs (только вендоры)</li>
-          <li>export_full_registry / import_registry_backup</li>
         </ul>
       </div>
 
-      <div class="list-box added reveal">
-        <h3>✓ Добавлено</h3>
+      <div class="list-box added">
+        <h3>Добавлено</h3>
         <ul>
           <li>Управление автозагрузкой (folders / registry / tasks / services)</li>
           <li>Курсоры: GitHub + 7z + реестр + SystemParametersInfo</li>
@@ -800,34 +267,19 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
           <li>Очистка (12 секций, свёрнутые блоки)</li>
           <li>Настройки (6 под-вкладок, 80+ тем)</li>
           <li>Portable mode (extreme_data/ + electron_userdata/)</li>
-          <li>Проверка админа + авто-перезапуск через UAC</li>
-          <li>Splash screen с прогрессом</li>
-          <li>Панель лога с автопрокруткой</li>
-          <li>Toast-уведомления</li>
-          <li>Sound (Web Audio): клик, hover, успех, ошибка</li>
-          <li>~80 тем + Material You</li>
-          <li>6 шрифтовых слотов + веса 100–900</li>
-          <li>Preload тяжёлых данных (PRELOAD_JOBS)</li>
-          <li>Lazy-вкладки со спиннером</li>
-          <li>buildTools IPC (запуск build_*.py + audit_tweaks.py)</li>
-          <li>Пары «твик ↔ отмена» с кнопкой ↩</li>
-          <li>Патчинг .bat (start /b, pause removal)</li>
-          <li>nsudolg (TrustedInstaller)</li>
-          <li>Стрим вывода с cp866 fallback</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MODULE MAPPING -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">7 · Карта модулей</span>
-      <h2 class="section-title">Куда что переехало</h2>
+    <div class="section-head">
+      <span class="section-eyebrow">7 · Карта модулей</span>
+      <h2>Куда что переехало</h2>
     </div>
-    <table class="diff-table reveal">
+    <table class="diff-table">
       <thead>
         <tr><th>Старое</th><th>Новое</th></tr>
       </thead>
@@ -837,77 +289,67 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
         <tr><td>tabs_beta.py</td><td>tweaks/*.json</td></tr>
         <tr><td>fixes_tab.py</td><td>src/renderer/tabs/fixes.js</td></tr>
         <tr><td>game_mode_tab.py</td><td>src/renderer/tabs/game-mode.js</td></tr>
-        <tr><td>optimization_tab.py</td><td>src/renderer/tabs/optimization.js</td></tr>
         <tr><td>app_uninstaller.py</td><td>src/renderer/tabs/app-uninstaller.js + appx-*.ps1</td></tr>
         <tr><td>developer_tools.py</td><td>buildTools:* IPC + settings-tools.js</td></tr>
         <tr><td>make.py / ps2batch.py</td><td class="removed">Удалены</td></tr>
         <tr><td>update_tabs_beta.py</td><td>build_tabs.py / build_full_tabs.py / build_all_tabs.py</td></tr>
-        <tr><td>user.py (темы)</td><td>src/renderer/themes.js</td></tr>
-        <tr><td>settings.ini</td><td>extreme_data/settings.json</td></tr>
-        <tr><td>Configs/</td><td class="removed">Концепт убран (фоны → wallpapers/)</td></tr>
-        <tr><td>Backup/*.reg</td><td>extreme_data/config_backups/&lt;app&gt;/</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- SUMMARY -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">8 · Итог</span>
-      <h2 class="section-title">Что осталось тем же</h2>
-      <p class="section-desc">
-        Концептуально Anton Vampire — та же программа: та же идея,
-        та же база твиков, тот же язык и та же ОС.
-      </p>
+    <div class="section-head">
+      <span class="section-eyebrow">8 · Итог</span>
+      <h2>Что осталось тем же</h2>
+      <p>Концептуально Anton Vampire — та же программа: та же идея, та же база твиков, тот же язык и та же ОС.</p>
     </div>
 
-    <div class="cards">
-      <div class="card reveal">
-        <div class="card-icon">🩸</div>
-        <div class="card-title">Та же идея</div>
-        <p class="card-desc">Запускать <code>.bat</code>/<code>.cmd</code>/<code>.ps1</code>/<code>.exe</code>/<code>.reg</code>/<code>.pow</code> твики с чекбоксами.</p>
+    <div class="features" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="feature">
+        <div class="feature-icon">🩸</div>
+        <div class="feature-title">Та же идея</div>
+        <p class="feature-desc">Запускать <code>.bat</code>/<code>.cmd</code>/<code>.ps1</code>/<code>.exe</code>/<code>.reg</code>/<code>.pow</code> твики с чекбоксами.</p>
       </div>
-      <div class="card reveal">
-        <div class="card-icon">🗂</div>
-        <div class="card-title">Та же база твиков</div>
-        <p class="card-desc">Папка <code>tweaks/</code>, папка <code>Utils/</code>, папка <code>assets/</code>, <code>descriptions.txt</code>.</p>
+      <div class="feature">
+        <div class="feature-icon">🗂</div>
+        <div class="feature-title">Та же база твиков</div>
+        <p class="feature-desc">Папка <code>tweaks/</code>, папка <code>Utils/</code>, папка <code>assets/</code>, <code>descriptions.txt</code>.</p>
       </div>
-      <div class="card reveal">
-        <div class="card-icon">🎨</div>
-        <div class="card-title">4 режима чекбоксов</div>
-        <p class="card-desc">regular (Hone), rectangle (All Tweaker), wide (BoosterX), sapphire (BoosterX-совместимый).</p>
+      <div class="feature">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-title">4 режима чекбоксов</div>
+        <p class="feature-desc">regular (Hone), rectangle (All Tweaker), wide (BoosterX), sapphire (BoosterX-совместимый).</p>
       </div>
-      <div class="card reveal">
-        <div class="card-icon">⚙</div>
-        <div class="card-title">Требует админа</div>
-        <p class="card-desc">Оба приложения требуют права администратора для глубоких изменений.</p>
+      <div class="feature">
+        <div class="feature-icon">⚙</div>
+        <div class="feature-title">Требует админа</div>
+        <p class="feature-desc">Оба приложения требуют права администратора для глубоких изменений.</p>
       </div>
-      <div class="card reveal">
-        <div class="card-icon">🇷🇺</div>
-        <div class="card-title">Русский язык</div>
-        <p class="card-desc">Весь интерфейс, описания и документация — на русском.</p>
+      <div class="feature">
+        <div class="feature-icon">🇷🇺</div>
+        <div class="feature-title">Русский язык</div>
+        <p class="feature-desc">Весь интерфейс, описания и документация — на русском.</p>
       </div>
-      <div class="card reveal">
-        <div class="card-icon">🪟</div>
-        <div class="card-title">Windows 10/11</div>
-        <p class="card-desc">Только Windows. Linux/macOS не поддерживаются.</p>
+      <div class="feature">
+        <div class="feature-icon">🪟</div>
+        <div class="feature-title">Windows 10/11</div>
+        <p class="feature-desc">Только Windows. Linux/macOS не поддерживаются.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section class="section">
   <div class="container">
-    <div class="cta reveal">
-      <h2 class="gradient-text">Готов попробовать?</h2>
-      <p>Anton Vampire v1.0.2-beta уже доступен. Portable, без зависимостей.</p>
-      <div class="cta-actions">
+    <div class="download-card">
+      <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 12px;">Готов попробовать?</h2>
+      <p style="margin-bottom: 32px;">Anton Vampire v1.0.3-beta уже доступен. Portable, без зависимостей.</p>
+      <div class="download-actions">
         <a href="index.html#download" class="btn btn-filled">📥 Скачать</a>
         <a href="docs.html" class="btn btn-outlined">📖 Документация</a>
-        <a href="index.html" class="btn btn-outlined">🏠 На главную</a>
+        <a href="index.html" class="btn btn-tonal">🏠 На главную</a>
       </div>
     </div>
   </div>
@@ -921,7 +363,7 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
         <span>ANTON VAMPIRE</span>
       </div>
       <div class="footer-meta">
-        <div>© 2026 Anton18-PNG · v1.0.2-beta</div>
+        <div>© 2026 Anton18-PNG · v1.0.3-beta</div>
         <div>Extreme Tweaker → Anton Vampire</div>
         <div>Licensed under <a href="docs.html#license">CC BY-NC-SA 4.0</a></div>
       </div>
@@ -929,19 +371,5 @@ code { font-family: var(--font-mono); font-size: 0.88em; color: var(--mint); bac
   </div>
 </footer>
 
-<script>
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-</script>
 </body>
 </html>

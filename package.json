@@ -1,6 +1,6 @@
 {
   "name": "extreme-tweaker",
-  "version": "1.0.2-beta",
+  "version": "1.0.3-beta",
   "description": "Anton Vampire — Windows optimizer",
   "main": "main.js",
   "author": "Anton18-PNG",
@@ -50,6 +50,7 @@
       "!extreme_data/**",
       "!user_data/**",
       "!logs/**",
+      "!web/**",
       "!tools/**",
       "!tweaks/**",
       "!Utils/**",
