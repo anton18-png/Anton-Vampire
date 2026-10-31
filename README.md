@@ -23,10 +23,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.1-beta/Anton.Vampire.Setup.1.0.1-beta.exe">
+  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.3-beta/Anton.Vampire.Setup.1.0.3-beta.exe">
     <img src="https://img.shields.io/badge/%F0%9F%93%A5_Download-Setup_.exe-EA38B8?style=for-the-badge" alt="Download Setup" />
   </a>
-  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.1-beta/Anton.Vampire.Portable.rar">
+  <a href="https://github.com/anton18-png/Anton-Vampire/releases/download/v1.0.3-beta/Anton.Vampire.Portable.rar">
     <img src="https://img.shields.io/badge/%F0%9F%93%A6_Download-Portable_.rar-6E40C0?style=for-the-badge" alt="Download Portable" />
   </a>
 </p>

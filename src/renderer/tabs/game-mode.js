@@ -17,6 +17,15 @@ function iconUrl(category, name) {
   return `file://${path}`;
 }
 
+/* ------------------------------------------------------------
+   Имена bat-скриптов (поправь под свои)
+   ------------------------------------------------------------ */
+const APPLY_BAT   = 'GameMode/Игровой режим.bat';
+const REVERT_BAT  = 'GameMode/Откат игрового режима.bat';
+const BACKUP_BAT  = 'GameMode/Бэкап служб.bat';
+const RESTORE_BAT = 'GameMode/Восстановить службы.bat';
+const ENABLE_BAT  = 'GameMode/Включить службы.bat';
+
 const HARDCORE_SERVICES = [
   'AJRouter','ALG','AarSvc','AppIDSvc','AppMgmt','AppReadiness','AppVClient','AppXSvc',
   'Appinfo','AssignedAccessManagerSvc','AxInstSV','BDESVC','BFE','BITS','BTAGService',
@@ -84,6 +93,29 @@ export async function renderGameMode() {
       <button class="btn danger"  id="btn-game-revert" style="width:100%">↩ Откатить игровой режим</button>
     </div>
 
+    <!-- Ползунок бэкапа служб -->
+    <div style="margin-top:16px;padding:12px;background:var(--bg-alt);border-radius:8px;">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none">
+        <span class="switch" id="game-backup-switch" role="switch" aria-checked="true" tabindex="0"
+              style="
+                position:relative;display:inline-block;width:42px;height:22px;flex:0 0 auto;
+                background:#3a3a3a;border-radius:22px;transition:background .15s;
+                outline:none;"
+              data-on="true">
+          <span class="switch-knob" style="
+            position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;
+            background:#fff;transition:left .15s;"></span>
+        </span>
+        <span>
+          <b>Бэкап служб перед запуском</b>
+          <div style="color:var(--fg-muted);font-size:12px;line-height:1.4;margin-top:2px">
+            Запоминает текущее состояние служб, чтобы при откате
+            включить обратно только те, что были выключены именно игровым режимом.
+          </div>
+        </span>
+      </label>
+    </div>
+
     <div style="margin-top:16px;padding:12px;background:var(--bg-alt);border-radius:8px;">
       <b>⚠️ Внимание</b>
       <ul style="margin:8px 0 0 16px;padding:0;color:var(--fg-muted);font-size:12px;line-height:1.6">
@@ -95,8 +127,6 @@ export async function renderGameMode() {
 
     <div id="game-status" style="margin-top:16px;color:var(--fg-muted);font-size:12px"></div>
   `;
-  left.querySelector('#btn-game-apply').addEventListener('click', () => runGame('GameMode/Игровой режим.bat'));
-  left.querySelector('#btn-game-revert').addEventListener('click', () => runGame('GameMode/Откат игрового режима.bat'));
   wrap.appendChild(left);
 
   // ============ RIGHT PANEL ============
@@ -118,17 +148,70 @@ export async function renderGameMode() {
 
   content.appendChild(wrap);
 
-  // ============ RUN ============
-  async function runGame(rel) {
-    const statusEl = left.querySelector('#game-status');
-    statusEl.textContent = `Запуск: ${rel}...`;
+  // ============ SWITCH LOGIC ============
+  const switchEl = left.querySelector('#game-backup-switch');
+  const knobEl   = switchEl.querySelector('.switch-knob');
+
+  function setSwitch(on) {
+    switchEl.dataset.on = on ? 'true' : 'false';
+    switchEl.setAttribute('aria-checked', on ? 'true' : 'false');
+    switchEl.style.background = on ? '#2e7d32' : '#3a3a3a';
+    knobEl.style.left = on ? '23px' : '3px';
+  }
+  function isSwitchOn() { return switchEl.dataset.on === 'true'; }
+
+  function toggleSwitch() { setSwitch(!isSwitchOn()); }
+
+  switchEl.addEventListener('click', toggleSwitch);
+  switchEl.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleSwitch(); }
+  });
+  setSwitch(true); // по умолчанию бэкап включён
+
+  // ============ RUN HELPERS ============
+  const statusEl = left.querySelector('#game-status');
+
+  async function runBat(rel, label) {
+    statusEl.textContent = `Запуск: ${label || rel}...`;
+    await window.api.tweaks.run('tweaks/' + rel, { wait: true });
+  }
+
+  // ============ APPLY ============
+  left.querySelector('#btn-game-apply').addEventListener('click', async () => {
+    const wantBackup = isSwitchOn();
     try {
-      await window.api.tweaks.run('tweaks/' + rel, { wait: false });
-      statusEl.textContent = 'Выполнено успешно.';
-      toast('Готово', 'success');
+      if (wantBackup) {
+        await runBat(BACKUP_BAT, 'Бэкап служб');
+      }
+      await runBat(APPLY_BAT, 'Игровой режим');
+      statusEl.textContent = wantBackup
+        ? 'Выполнено. Бэкап служб сохранён.'
+        : 'Выполнено. Бэкап служб НЕ создавался.';
+      toast('Игровой режим применён', 'success');
     } catch (e) {
       statusEl.textContent = 'Ошибка: ' + e.message;
       toast('Ошибка: ' + e.message, 'error');
     }
-  }
+  });
+
+  // ============ REVERT ============
+  left.querySelector('#btn-game-revert').addEventListener('click', async () => {
+    const wantBackup = isSwitchOn();
+    try {
+      await runBat(REVERT_BAT, 'Откат игрового режима');
+      if (wantBackup) {
+        // Восстанавливаем только те службы, что были отключены ДО Game Mode.
+        await runBat(RESTORE_BAT, 'Восстановление служб из бэкапа');
+        statusEl.textContent = 'Откат выполнен. Службы восстановлены из бэкапа.';
+      } else {
+        // Бэкапа нет — старое поведение: включаем всё, что есть в списке.
+        await runBat(ENABLE_BAT, 'Включение служб');
+        statusEl.textContent = 'Откат выполнен. Службы включены (без бэкапа).';
+      }
+      toast('Игровой режим откатён', 'success');
+    } catch (e) {
+      statusEl.textContent = 'Ошибка: ' + e.message;
+      toast('Ошибка: ' + e.message, 'error');
+    }
+  });
 }
