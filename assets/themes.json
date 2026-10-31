@@ -252,6 +252,12 @@
       "accent": "#61afef", "accent2": "#528bcc", "accentText": "#282c34",
       "success": "#98c379", "warning": "#e5c07b", "danger": "#e06c75", "info": "#56b6c2"
     },
+    "hacker_new": {
+      "bg": "#000000", "bgAlt": "#0a0a0a", "card": "#111111", "cardHover": "#1a1a1a",
+      "border": "#00ff00", "fg": "#00ff00", "fgMuted": "#008800",
+      "accent": "#00ff00", "accent2": "#00cc00", "accentText": "#000000",
+      "success": "#00ff00", "warning": "#ffff00", "danger": "#ff0000", "info": "#00ffff"
+    },
 
     "bootstrap": {
       "bg": "#212529", "bgAlt": "#1a1d20", "card": "#2c3034", "cardHover": "#343a40",
@@ -385,6 +391,19 @@
       "border": "#ff003c", "fg": "#f0f0f0", "fgMuted": "#8a7a7a",
       "accent": "#00e5ff", "accent2": "#ff003c", "accentText": "#000000",
       "success": "#00e5ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#00b0c0"
+    },    
+    "cyberpunk_yellow": {
+      "bg": "#0b0b0b", "bgAlt": "#141414", "card": "#1a1a1a", "cardHover": "#242424",
+      "border": "#fcee0a", "fg": "#fcee0a", "fgMuted": "#a39e1a",
+      "accent": "#fcee0a", "accent2": "#00e5ff", "accentText": "#000000",
+      "success": "#00e5ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#00e5ff"
+    },
+    
+    "cyberpunk_blue": {
+      "bg": "#0a1128", "bgAlt": "#001034", "card": "#001f54", "cardHover": "#002a73",
+      "border": "#00f0ff", "fg": "#00f0ff", "fgMuted": "#007a99",
+      "accent": "#00f0ff", "accent2": "#0055ff", "accentText": "#0a1128",
+      "success": "#00f0ff", "warning": "#fcee0a", "danger": "#ff003c", "info": "#00f0ff"
     },
 
     "catppuccin_latte": {
@@ -559,11 +578,23 @@
       { "id": "dark-dev", "title": "⚡ Тёмные темы от разработчика", "themes": ["cyberpunk", "hacker", "palenight", "boosterx", "boosterxvapor"] },
       { "id": "dark-anton", "title": "🩸 Тёмные темы Антона", "themes": ["extreme", "newhone", "nord"] },
       { "id": "dark-ruslan", "title": "💀 Тёмные темы Русланчика", "themes": ["wincry", "ruslanchik", "wincry_warning", "wincry_full_warning"] },
-      { "id": "dark-new", "title": "✨ Новые тёмные темы", "themes": ["bloodmoon", "abyss", "newnord", "catppuccin", "dracula", "newpalenight", "hellokitty", "kuromi", "onedark"] },
+      { "id": "dark-new", "title": "✨ Новые тёмные темы", "themes": ["bloodmoon", "abyss", "newnord", "catppuccin", "dracula", "newpalenight", "hellokitty", "kuromi", "onedark", "hacker_new"] },
       { "id": "curated-2-dark", "title": "🎯 Curated 2.0 — Тёмные", "themes": ["bootstrap", "pydata", "nord_curated", "solarized", "catppuccin_curated", "gruvbox", "dracula_curated", "tokyo_night", "one", "everforest"] },
       { "id": "curated-2-light", "title": "🎯 Curated 2.0 — Светлые", "themes": ["bootstrap_light", "pydata_light", "solarized_light", "gruvbox_light", "tokyo_night_light", "one_light", "everforest_light"] },
-      { "id": "games", "title": "🎮 Игровые темы", "themes": ["vampire_the_masquerade", "counter_strike_16", "counter_strike_2", "diablo", "cyberpunk_2077"] },
-      { "id": "catppuccin-variants", "title": "🐱 Catppuccin (все варианты)", "themes": ["catppuccin_latte", "catppuccin_frappe", "catppuccin_macchiato", "catppuccin_mocha"] },
+      { 
+        "id": "games", 
+        "title": "🎮 Игровые темы", 
+        "themes": [
+          "vampire_the_masquerade", 
+          "counter_strike_16", 
+          "counter_strike_2", 
+          "diablo", 
+          "cyberpunk_2077",
+          "cyberpunk_yellow",
+          "cyberpunk_blue"
+        ] 
+      },
+      { "id": "catppuccin-variants", "title": "🐱 Catppuccin", "themes": ["catppuccin_latte", "catppuccin_frappe", "catppuccin_macchiato", "catppuccin_mocha"] },
       { 
         "id": "dark-reader", 
         "title": "🌙 Dark Reader", 
