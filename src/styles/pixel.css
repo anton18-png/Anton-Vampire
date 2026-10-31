@@ -3076,3 +3076,214 @@
 }
 .vendor-cancel:hover  { background: color-mix(in srgb, var(--warn, #ffbd05) 30%, transparent); }
 .vendor-cancel:disabled { opacity: .4; cursor: wait; }
+
+/* ============================================================
+   ЖЕСТКИЙ ФИКС ОТСТУПОВ
+   ============================================================ */
+
+/* 1. Расстояние между секциями настроек */
+.settings-section {
+  margin-bottom: 20px !important;
+}
+.settings-section-body {
+  gap: 16px !important;
+}
+.settings-section-title {
+  margin-bottom: 14px !important;
+}
+
+/* 2. Расстояние между полями ввода внутри секций */
+.field {
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+}
+.toggle-row {
+  padding: 12px 4px !important;
+}
+
+/* 3. Сетки карточек (темы, стили, твики, приложения, утилиты) */
+.style-picker-grid,
+.theme-grid,
+.cbx-hone-grid,
+.cbx-at-grid,
+.checkbox-list-wide,
+.apps-grid,
+.detected-grid,
+.comfort-tiles,
+.vendor-dropdowns,
+.wallpaper-grid,
+.m3-toggles-grid,
+.startup-summary,
+.cursor-grid {
+  gap: 16px !important;
+}
+
+/* 4. Отступы внутри самих карточек, чтобы текст не прилипал */
+.style-card,
+.theme-tile,
+.cbx-hone,
+.cbx-at,
+.cbx.wide,
+.apps-card,
+.detected-card,
+.comfort-tile,
+.wallpaper-card,
+.m3-section,
+.startup-row,
+.security-check-row,
+.vendor-section {
+  padding: 16px !important;
+}
+
+/* 5. Расстояние между группами тем и тулбарами */
+.theme-group {
+  margin-bottom: 16px !important;
+}
+.theme-toolbar {
+  margin-bottom: 12px !important;
+}
+.sub-tabs-nav,
+.settings-subtabs {
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+  padding: 8px !important;
+}
+
+/* 6. Списки в автозагрузке и вендорах */
+.startup-rows,
+.vendor-list {
+  gap: 8px !important;
+}
+.startup-group {
+  margin-bottom: 16px !important;
+  padding: 12px !important;
+}
+
+/* === СТИЛИ ДЛЯ БЛОКОВ ИЗ JSON (PIXEL) === */
+.vendor-panel {
+  display: flex !important;
+  gap: 16px !important;
+  overflow-x: auto !important;
+  padding: 4px 4px 16px 4px !important;
+}
+.vendor-section {
+  flex: 0 0 220px !important;
+  background: var(--bg-alt) !important;
+  border: 2px solid var(--border) !important;
+  border-top: 4px solid var(--vendor-color, var(--accent)) !important;
+  padding: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  max-height: 450px !important;
+  box-shadow: 4px 4px 0 color-mix(in srgb, #000 40%, transparent) !important;
+}
+.vendor-head {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 2px dashed var(--border) !important;
+  padding-bottom: 8px !important;
+}
+.vendor-select-all {
+  font-family: var(--font-heading) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: var(--vendor-color, var(--accent)) !important;
+}
+.vendor-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  overflow-y: auto !important;
+}
+.vendor-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 4px 6px !important;
+  background: var(--bg) !important;
+  border: 1px solid var(--border) !important;
+  cursor: pointer !important;
+}
+.vendor-row:hover {
+  border-color: var(--accent) !important;
+}
+.vendor-row.checked {
+  background: color-mix(in srgb, var(--accent) 20%, var(--bg)) !important;
+  border-color: var(--accent) !important;
+}
+.vendor-name {
+  font-size: 11px !important;
+  color: var(--fg) !important;
+  flex: 1 !important;
+}
+
+/* === СТИЛИ ДЛЯ TABS.JSON (PIXEL) === */
+.sub-tabs-nav {
+  display: flex !important;
+  gap: 8px !important;
+  padding: 8px 0 !important;
+  border-bottom: 2px dashed var(--border) !important;
+  margin-bottom: 16px !important;
+  flex-wrap: wrap !important;
+}
+.sub-tab-btn {
+  background: var(--bg-alt) !important;
+  border: 2px solid var(--border) !important;
+  color: var(--fg-muted) !important;
+  padding: 6px 14px !important;
+  border-radius: 0 !important;
+  font-family: var(--font-heading) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  box-shadow: 2px 2px 0 color-mix(in srgb, #000 50%, transparent) !important;
+}
+.sub-tab-btn:hover {
+  color: var(--fg) !important;
+  transform: translate(-1px, -1px) !important;
+}
+.sub-tab-btn.active {
+  background: var(--accent) !important;
+  color: var(--accent-text) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 2px 2px 0 color-mix(in srgb, #000 80%, transparent) !important;
+  transform: translate(1px, 1px) !important;
+}
+/* Карточки твиков */
+.cbx-hone, .cbx-at {
+  background: var(--bg-alt) !important;
+  border: 2px solid var(--border) !important;
+  padding: 12px 16px !important;
+  margin-bottom: 8px !important;
+  box-shadow: 3px 3px 0 color-mix(in srgb, #000 40%, transparent) !important;
+}
+
+/* ============================================================
+   КРУГЛАЯ АВАТАРКА НА ГЛАВНОЙ
+   ============================================================ */
+
+/* Контейнер аватарки */
+.hh-avatar {
+    border-radius: 50% !important;
+    clip-path: none !important; /* Убираем срезанные углы, если они применились от глобального патча */
+    border: 2px solid var(--accent) !important;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.4) !important; /* Усиливаем неоновое свечение */
+}
+
+/* Сама картинка внутри */
+.hh-avatar-img {
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+/* Эмодзи-заглушка (если нет картинки) */
+.hh-avatar-emoji {
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+}

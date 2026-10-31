@@ -9,10 +9,13 @@ import { loggedRunStream } from '../logger.js';
 const SOURCES = [
   { id: 'standard', label: '📦 Стандартные', desc: 'Встроенные твики оптимизации', kind: 'standard' },
   { id: 'xos',      label: '🟢 XOS-Tweaks',      kind: 'extra', json: 'tweaks/x_os_tabs.json',      baseDir: 'tweaks/Оптимизация/XOS-Tweaks' },
-  { id: 'immortal', label: '💀 ImmortalOS-Tweaks', kind: 'extra', json: 'tweaks/immortal_os_tabs.json', baseDir: 'tweaks/Оптимизация/ImmortalOS' },
+  { id: 'immortal', label: '💀 ImmortalOS-Tweaks', kind: 'extra', json: 'tweaks/immortal_os_tabs.json', baseDir: 'tweaks/Оптимизация/ImmortalOS-Tweaks' },
   { id: 'marty',    label: '🎯 MartyFiles-Tweaks', kind: 'extra', json: 'tweaks/marty_files_tabs.json', baseDir: 'tweaks/Оптимизация/MartyFiles' },
   { id: 'synergy',  label: '🔷 SynergyOS-Tweaks',  kind: 'extra', json: 'tweaks/synergy_os_tabs.json',  baseDir: 'tweaks/Оптимизация/SynergyOS-Tweaks' },
   { id: 'systemx',  label: '🟣 SystemX-Tweaks',    kind: 'extra', json: 'tweaks/system_x_tabs.json',    baseDir: 'tweaks/Оптимизация/SystemX' },
+  { id: 'atlas',    label: '🔴 AtlasOS-Tweaks',    kind: 'extra', json: 'tweaks/atlas_os_tabs.json',    baseDir: 'tweaks/Оптимизация/AtlasOS' },
+  { id: 'rapid',    label: '🔴 RapidOS-Tweaks',    kind: 'extra', json: 'tweaks/rapid_os_tabs.json',    baseDir: 'tweaks/Оптимизация/RapidOS' },
+  { id: 'revi',     label: '🔴 ReviOS-Tweaks',     kind: 'extra', json: 'tweaks/revi_os_tabs.json',     baseDir: 'tweaks/Оптимизация/ReviOS' },
   { id: 'vain',     label: '👑 VainOS-Tweaks',     kind: 'extra', json: 'tweaks/vain_os_tabs.json',     baseDir: 'tweaks/Оптимизация/VainOS-Tweaks' }
 ];
 

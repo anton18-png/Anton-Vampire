@@ -210,7 +210,19 @@ export async function renderSettings() {
             'expandable': 'Sapphire'
           }
         }),
-      numberField('Колонок по умолчанию', 'Columns.default', cfg.Columns?.default ?? 3)
+      numberField('Колонок по умолчанию', 'Columns.default', cfg.Columns?.default ?? 3),
+
+      // ─── NEW ─────────────────────────────────────────────────
+      toggleField(
+        'Разрешить выделение чекбоксов',
+        'General.checkbox_selection_enabled',
+        !!cfg.General?.checkbox_selection_enabled,
+        'Включено — можно кликать по карточкам твиков, чтобы выделить их ' +
+        'и применить пакетом. Выключено — чекбоксы отображаются, но неактивны, ' +
+        'случайно включить твик нельзя. ' +
+        '<b>Применяется при следующем переходе на вкладку с твиками.</b>'
+      )
+      // ─────────────────────────────────────────────────────────
     ]));
 
     frag.appendChild(section('🔊 Звук', [soundToggle(), soundVolume()]));
@@ -556,7 +568,7 @@ export async function renderSettings() {
 
     s.querySelector('#about-site')?.addEventListener('click', (e) => {
       e.preventDefault();
-      window.api.shell.openExternal('https://anton18-png.github.io/Extreme/');
+      window.api.shell.openExternal('https://anton18-png.github.io/Anton-Vampire/web/index.html');
     });
     s.querySelector('#about-tg')?.addEventListener('click', (e) => {
       e.preventDefault();
@@ -615,9 +627,10 @@ export async function renderSettings() {
 
     const INFO = {
       default:   { icon: '🎨', title: 'Material 3',         desc: 'Стандарт: скруглённые углы, мягкие тени' },
-      pixel:     { icon: '🕹',  title: 'Pixel Style',        desc: '8-bit ретро: острые углы, ступенчатые анимации' },
+      pixel:     { icon: '🕹', title: 'Pixel Style',        desc: '8-bit ретро: острые углы, ступенчатые анимации' },
       material3: { icon: '✨', title: 'Material You',       desc: 'Полный M3: круглые кнопки, elevation, state layers' },
       kitty:     { icon: '🎀', title: 'Pretty Kitty Pixel', desc: 'Милый пиксельный стиль с пастельными акцентами ♥' },
+      cyberpunk: { icon: '🌆', title: 'Cyberpunk 2077',     desc: 'Неон, сканлайны, острые углы и жёлто-красные акценты' },
     };
 
     const grid = document.createElement('div');
@@ -1097,11 +1110,23 @@ export async function renderSettings() {
       await window.api.config.set(key, nv);
       const [sec, sub] = key.split('.');
       if (state.config[sec]) state.config[sec][sub] = nv;
-
+  
       if (key === 'General.logs_enabled' && window.api?.logger?.setEnabled) {
         try { await window.api.logger.setEnabled(nv); } catch { /* ignore */ }
       }
-
+  
+      // ─── Выделение чекбоксов: мгновенно скрыть/показать всё ───
+      if (key === 'General.checkbox_selection_enabled') {
+        try { state.checkboxes?.clear?.(); } catch { /* ignore */ }
+  
+        document.body.classList.toggle('cbx-selection-off', !nv);
+  
+        for (const id of ['btn-select-all', 'btn-execute']) {
+          const el = document.getElementById(id);
+          if (el) el.style.display = nv ? '' : 'none';
+        }
+      }
+  
       toast('Сохранено: ' + label, 'success', 1200);
       reapplyTheme();
     });

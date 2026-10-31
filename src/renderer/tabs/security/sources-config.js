@@ -57,6 +57,14 @@
       json: 'tweaks/vain_os_privacy_tabs.json',
       baseDir: 'tweaks/Приватность/VainOS-Tweaks',
       flatCategories: true
+    },
+    { 
+      id: 'immortal',
+      label: '💀 ImmortalOS-Tweaks',
+      desc: 'Приватность ImmortalOS',
+      json: 'tweaks/immortal_os_privacy_tabs.json',
+      baseDir: 'tweaks/Приватность/ImmortalOS-Tweaks',
+      flatCategories: true
     }
   ];
   
@@ -95,6 +103,14 @@
       desc: 'Удобство VainOS',
       json: 'tweaks/vain_os_comfort_tabs.json',
       baseDir: 'tweaks/Удобство/VainOS-Tweaks',
+      flatCategories: true
+    },
+    { 
+      id: 'immortal',
+      label: '💀 ImmortalOS-Tweaks',
+      desc: 'Удобство ImmortalOS',
+      json: 'tweaks/immortal_os_comfort_tabs.json',
+      baseDir: 'tweaks/Удобство/ImmortalOS-Tweaks',
       flatCategories: true
     }
   ];

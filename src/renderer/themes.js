@@ -389,6 +389,12 @@ export const THEMES = {
     border: '#8b1a1a', fg: '#d4b8a0', fgMuted: '#8a6a5a',
     accent: '#b22222', accent2: '#7a1010', accentText: '#ffffff',
     success: '#4a6a2a', warning: '#b8860b', danger: '#b22222', info: '#4a5a7a'
+  },
+  cyberpunk_2077: {
+    bg: '#090507', bgAlt: '#11070a', card: '#180a10', cardHover: '#24101a',
+    border: '#ff003c', fg: '#f0f0f0', fgMuted: '#8a7a7a',
+    accent: '#00e5ff', accent2: '#ff003c', accentText: '#000000',
+    success: '#00e5ff', warning: '#fcee0a', danger: '#ff003c', info: '#00b0c0'
   }
 };
 
@@ -458,7 +464,7 @@ export const THEMES_META = {
       'gruvbox_light', 'tokyo_night_light', 'one_light', 'everforest_light'
     ]},
     { id: 'games', title: '🎮 Игровые темы', themes: [
-      'vampire_the_masquerade', 'counter_strike_16', 'counter_strike_2', 'diablo'
+      'vampire_the_masquerade', 'counter_strike_16', 'counter_strike_2', 'diablo', 'cyberpunk_2077'
     ]},
   ]
 };

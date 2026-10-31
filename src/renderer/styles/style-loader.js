@@ -3,12 +3,13 @@
    Темы (цвета) применяются отдельно через themes.js.
    ============================================================ */
 
-   export const STYLES = {
-    default:   { id: 'default',   label: '🎨 Material 3',        file: 'src/styles/default.css' },
-    pixel:     { id: 'pixel',     label: '🕹 Pixel Style',        file: 'src/styles/pixel.css' },
-    material3: { id: 'material3', label: '✨ Material You',       file: 'src/styles/material3.css' },
-    kitty:     { id: 'kitty',     label: '🎀 Pretty Kitty Pixel', file: 'src/styles/kitty.css' },
-  };
+    export const STYLES = {
+      default:   { id: 'default',   label: '🎨 Material 3',         file: 'src/styles/default.css' },
+      pixel:     { id: 'pixel',     label: '🕹 Pixel Style',         file: 'src/styles/pixel.css' },
+      material3: { id: 'material3', label: '✨ Material You',       file: 'src/styles/material3.css' },
+      kitty:     { id: 'kitty',     label: '🎀 Pretty Kitty Pixel', file: 'src/styles/kitty.css' },
+      cyberpunk: { id: 'cyberpunk', label: '🌆 Cyberpunk 2077',     file: 'src/styles/cyberpunk.css' },
+    };
   
   export const STYLE_IDS = Object.keys(STYLES);
   

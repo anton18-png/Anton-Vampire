@@ -62,6 +62,13 @@ const POWER_SOURCES = [
     json: 'tweaks/x_os_legacy_power_tabs.json',
     baseDir: 'tweaks/Электропитание/xOS'
   },
+  { 
+    id: 'immortal',
+    label: '💀 ImmortalOS-Tweaks',
+    desc: 'Набор твиков ImmortalOS',
+    json: 'tweaks/immortal_os_power_tabs.json',
+    baseDir: 'tweaks/Электропитание/ImmortalOS-Tweaks',
+  },
   {
     id: 'systemx',
     label: '🟣 SystemX-Tweaks',

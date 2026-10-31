@@ -23,14 +23,57 @@ const MODE_MAP = {
 let _showCancel = true;
 export function setShowCancelButton(v) { _showCancel = !!v; }
 
-/* Защита от зависших кнопок: если stream-end не пришёл за 30 секунд,
-   кнопка разблокируется. */
+/* ============================================================
+   ВЫДЕЛЕНИЕ ЧЕКБОКСОВ
+   ============================================================ */
+const SELECTION_KEY = 'General.checkbox_selection_enabled';
+const MASS_ACTION_BTN_IDS = ['btn-select-all', 'btn-execute'];
+
+/** Источник истины — state.config.General.checkbox_selection_enabled */
+export function isSelectionEnabled() {
+  return !!state?.config?.General?.checkbox_selection_enabled;
+}
+
+/** Программное включение/выключение. Применяется сразу к телу документа
+ *  и к кнопкам массовых действий; для карточек — нужно пере-рендерить. */
+export function setEnableSelection(v) {
+  if (!state.config) state.config = {};
+  if (!state.config.General) state.config.General = {};
+  state.config.General.checkbox_selection_enabled = !!v;
+  syncSelectionUIVisibility();
+}
+
+/** Синхронизирует:
+ *  — класс body.cbx-selection-off (CSS прячет кнопки массовых действий);
+ *  — display кнопок #btn-select-all / #btn-execute напрямую.
+ */
+function syncSelectionUIVisibility() {
+  const enabled = isSelectionEnabled();
+
+  document.body.classList.toggle('cbx-selection-off', !enabled);
+
+  const apply = () => {
+    for (const id of MASS_ACTION_BTN_IDS) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = enabled ? '' : 'none';
+    }
+  };
+  apply();
+  // на случай, если кнопки рендерятся после грида
+  requestAnimationFrame(apply);
+  setTimeout(apply, 100);
+}
+
+/* Защита от зависших кнопок */
 const BUTTON_GUARD_MS = 30 * 1000;
 
 export function renderCheckboxGrid(container, options) {
   const { items, tabId, sectionId, mode = 'hone', columns = 3, showCancelButton } = options;
 
   if (typeof showCancelButton === 'boolean') setShowCancelButton(showCancelButton);
+
+  // Синхронизируем видимость кнопок массовых действий
+  syncSelectionUIVisibility();
 
   if (!items || !items.length) {
     container.innerHTML = '<p class="muted">Нет элементов</p>';
@@ -240,6 +283,15 @@ function registerCard(key, card, item, sectionId, tabId, varRef) {
   });
 }
 
+/** Выделение выключено:
+ *  — квадратик-чекбокс скрыт ПОЛНОСТЬЮ (display: none);
+ *  — карточка получает класс cbx-no-select для стилизации. */
+function lockSelection(card, input) {
+  input.disabled = true;
+  input.style.display = 'none';
+  card.classList.add('cbx-no-select');
+}
+
 /* ============================================================
    HONE
    ============================================================ */
@@ -302,7 +354,12 @@ function makeHoneCard(item, tabId, sectionId) {
     if (!text) desc.classList.add('muted');
   });
 
-  attachCheckbox(card, input, varRef);
+  if (isSelectionEnabled()) {
+    attachCheckbox(card, input, varRef);
+  } else {
+    lockSelection(card, input);
+  }
+
   registerCard(key, card, item, sectionId, tabId, varRef);
   return card;
 }
@@ -365,7 +422,12 @@ function makeAllTweakerCard(item, tabId, sectionId) {
     if (tooltip) { tooltip.remove(); tooltip = null; }
   });
 
-  attachCheckbox(card, input, varRef);
+  if (isSelectionEnabled()) {
+    attachCheckbox(card, input, varRef);
+  } else {
+    lockSelection(card, input);
+  }
+
   registerCard(key, card, item, sectionId, tabId, varRef);
   return card;
 }
@@ -450,7 +512,12 @@ function makeBoosterXCard(item, tabId, sectionId) {
   desc.className = 'desc';
   card.appendChild(desc);
 
-  attachCheckbox(card, input, varRef);
+  if (isSelectionEnabled()) {
+    attachCheckbox(card, input, varRef);
+  } else {
+    lockSelection(card, input);
+  }
+
   registerCard(key, card, item, sectionId, tabId, varRef);
   return card;
 }

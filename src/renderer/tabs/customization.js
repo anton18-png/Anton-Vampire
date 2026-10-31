@@ -78,6 +78,27 @@ const CUSTOMIZATION_SOURCES = [
     desc: 'Твики кастомизации VainOS',
     json: 'tweaks/vain_os_customization_tabs.json',
     baseDir: 'tweaks/Кастомизация/VainOS-Tweaks'
+  },
+  {
+    id: 'atlas',
+    label: '🔴 AtlasOS-Tweaks',
+    desc: 'Твики кастомизации AtlasOS',
+    json: 'tweaks/atlas_os_customization_tabs.json',
+    baseDir: 'tweaks/Кастомизация/AtlasOS-Tweaks'
+  },
+  {
+    id: 'rapid',
+    label: '🔴 RapidOS-Tweaks',
+    desc: 'Твики кастомизации RapidOS',
+    json: 'tweaks/rapid_os_customization_tabs.json',
+    baseDir: 'tweaks/Кастомизация/RapidOS-Tweaks'
+  },
+  {
+    id: 'revi',
+    label: '🔴 ReviOS-Tweaks',
+    desc: 'Твики кастомизации ReviOS',
+    json: 'tweaks/revi_os_customization_tabs.json',
+    baseDir: 'tweaks/Кастомизация/ReviOS-Tweaks'
   }
 ];
 

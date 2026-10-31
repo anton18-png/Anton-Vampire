@@ -4,8 +4,8 @@ const path = require('path');
 const DEFAULTS = {
   General: {
     /* --- Основное --- */
-    theme: 'vampire_the_masquerade',
-    ui_style: 'material3',   // 'default' | 'pixel' | 'material3' | 'kitty'
+    theme: 'cyberpunk_2077',
+    ui_style: 'cyberpunk',   // 'default' | 'pixel' | 'material3' | 'kitty'
     font_family: 'Segoe UI',
     font_size: 13,
     checkbox_font_size: 13,
@@ -22,17 +22,17 @@ const DEFAULTS = {
     show_checkbox_full_path: true,
     sidebar_opacity: 40,
     unified_button_color: true,
-    visual_effect: 'glass',
+    visual_effect: 'none',
     tweak_timeout_ms: 300000,
     wallpaper_last_dir: '',
     logs_enabled: false,
     show_cancel_buttons: true,
 
     /* ---------- ШРИФТЫ ---------- */
-    font_heading_latin: 'Silkscreen',
-    font_heading_cyr: 'JetBrains Mono',
-    font_body_latin: 'JetBrains Mono',
-    font_body_cyr: 'JetBrains Mono',
+    font_heading_latin: 'IBM Plex Mono',
+    font_heading_cyr: 'IBM Plex Mono',
+    font_body_latin: 'IBM Plex Mono',
+    font_body_cyr: 'IBM Plex Mono',
     font_mono: 'JetBrains Mono',
     ui_density: 'comfortable',
     corner_radius: 12,
