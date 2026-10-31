@@ -412,133 +412,133 @@
       "success": "#a6e3a1", "warning": "#f9e2af", "danger": "#f38ba8", "info": "#89dceb"
     },
 
-    "dark_reader_default": {
+    "dr_default": {
       "bg": "#181a1b", "bgAlt": "#1c1e1f", "card": "#232628", "cardHover": "#2b2e31",
       "border": "#2a2e32", "fg": "#e8e6e3", "fgMuted": "#a0a4a8",
       "accent": "#2a78d6", "accent2": "#1f5aa5", "accentText": "#ffffff",
       "success": "#3fb950", "warning": "#d29922", "danger": "#f85149", "info": "#58a6ff"
     },
-    "dark_reader_darkberry_blackwater": {
+    "dr_darkberry_blackwater": {
       "bg": "#0f111a", "bgAlt": "#141724", "card": "#1a1e2d", "cardHover": "#22273a",
       "border": "#2a3045", "fg": "#8f93a2", "fgMuted": "#5c6175",
       "accent": "#84ffff", "accent2": "#4dc7c7", "accentText": "#0f111a",
       "success": "#c3e88d", "warning": "#ffcb6b", "danger": "#f07178", "info": "#89ddff"
     },
-    "dark_reader_darkberry_fen": {
+    "dr_darkberry_fen": {
       "bg": "#101718", "bgAlt": "#151f20", "card": "#1a282a", "cardHover": "#223436",
       "border": "#2d4548", "fg": "#8ab9b5", "fgMuted": "#587b78",
       "accent": "#5cb88a", "accent2": "#3f8a64", "accentText": "#101718",
       "success": "#5cb88a", "warning": "#e5c07b", "danger": "#e06c75", "info": "#61afef"
     },
-    "dark_reader_darkberry_mire": {
+    "dr_darkberry_mire": {
       "bg": "#121412", "bgAlt": "#181b18", "card": "#1f231f", "cardHover": "#282e28",
       "border": "#343c34", "fg": "#a8b59e", "fgMuted": "#6e7a65",
       "accent": "#b5c59e", "accent2": "#8c9c75", "accentText": "#121412",
       "success": "#a8b59e", "warning": "#d4b872", "danger": "#c76b6b", "info": "#7a9e9e"
     },
-    "dark_reader_deep_ocean": {
+    "dr_deep_ocean": {
       "bg": "#001122", "bgAlt": "#001730", "card": "#002040", "cardHover": "#002b55",
       "border": "#003366", "fg": "#e0e6ed", "fgMuted": "#6b8fb5",
       "accent": "#00bfff", "accent2": "#0099cc", "accentText": "#001122",
       "success": "#33ff99", "warning": "#ffcc00", "danger": "#ff3366", "info": "#00bfff"
     },
-    "dark_reader_dracula": {
+    "dr_dracula": {
       "bg": "#282a36", "bgAlt": "#21222c", "card": "#2f3142", "cardHover": "#3d3f54",
       "border": "#44475a", "fg": "#f8f8f2", "fgMuted": "#bdbdcd",
       "accent": "#bd93f9", "accent2": "#8c62d9", "accentText": "#282a36",
       "success": "#50fa7b", "warning": "#ffb86c", "danger": "#ff5555", "info": "#8be9fd"
     },
-    "dark_reader_everforest": {
+    "dr_everforest": {
       "bg": "#2d353b", "bgAlt": "#272e33", "card": "#343f44", "cardHover": "#3d484d",
       "border": "#475258", "fg": "#d3c6aa", "fgMuted": "#859289",
       "accent": "#a7c080", "accent2": "#83a55e", "accentText": "#2d353b",
       "success": "#a7c080", "warning": "#dbbc7f", "danger": "#e67e80", "info": "#7fbbb3"
     },
-    "dark_reader_github": {
+    "dr_github": {
       "bg": "#0d1117", "bgAlt": "#010409", "card": "#161b22", "cardHover": "#21262d",
       "border": "#30363d", "fg": "#c9d1d9", "fgMuted": "#8b949e",
       "accent": "#58a6ff", "accent2": "#388bfd", "accentText": "#ffffff",
       "success": "#3fb950", "warning": "#d29922", "danger": "#f85149", "info": "#58a6ff"
     },
-    "dark_reader_gruvbox": {
+    "dr_gruvbox": {
       "bg": "#282828", "bgAlt": "#1d2021", "card": "#3c3836", "cardHover": "#504945",
       "border": "#665c54", "fg": "#ebdbb2", "fgMuted": "#a89984",
       "accent": "#d79921", "accent2": "#b57614", "accentText": "#282828",
       "success": "#b8bb26", "warning": "#fabd2f", "danger": "#fb4934", "info": "#83a598"
     },
-    "dark_reader_kanagawa": {
+    "dr_kanagawa": {
       "bg": "#1f1f28", "bgAlt": "#16161d", "card": "#2a2a37", "cardHover": "#363646",
       "border": "#54546d", "fg": "#dcd7ba", "fgMuted": "#727169",
       "accent": "#7e9cd8", "accent2": "#5d7bb5", "accentText": "#1f1f28",
       "success": "#98bb6c", "warning": "#e6c384", "danger": "#e46876", "info": "#7fb4ca"
     },
-    "dark_reader_material_you": {
+    "dr_material_you": {
       "bg": "#141218", "bgAlt": "#1d1b20", "card": "#211f26", "cardHover": "#2b2930",
       "border": "#49454f", "fg": "#e6e0e9", "fgMuted": "#cac4d0",
       "accent": "#d0bcff", "accent2": "#b69df8", "accentText": "#381e72",
       "success": "#b8f2c0", "warning": "#ffd8a8", "danger": "#ffb4ab", "info": "#a8c7fa"
     },
-    "dark_reader_matte_black": {
+    "dr_matte_black": {
       "bg": "#000000", "bgAlt": "#0a0a0a", "card": "#121212", "cardHover": "#1c1c1c",
       "border": "#2a2a2a", "fg": "#ffffff", "fgMuted": "#888888",
       "accent": "#bb86fc", "accent2": "#9c27b0", "accentText": "#000000",
       "success": "#03dac6", "warning": "#ffb74d", "danger": "#cf6679", "info": "#90caf9"
     },
-    "dark_reader_night_owl": {
+    "dr_night_owl": {
       "bg": "#011627", "bgAlt": "#01111a", "card": "#0b2942", "cardHover": "#133a5c",
       "border": "#1d3b53", "fg": "#d6deeb", "fgMuted": "#637777",
       "accent": "#82aaff", "accent2": "#5c8fff", "accentText": "#011627",
       "success": "#addb67", "warning": "#ecc48d", "danger": "#ef5350", "info": "#7fdbca"
     },
-    "dark_reader_nord": {
+    "dr_nord": {
       "bg": "#2e3440", "bgAlt": "#272c36", "card": "#3b4252", "cardHover": "#434c5e",
       "border": "#4c566a", "fg": "#eceff4", "fgMuted": "#a7b1c3",
       "accent": "#88c0d0", "accent2": "#5e81ac", "accentText": "#2e3440",
       "success": "#a3be8c", "warning": "#ebcb8b", "danger": "#bf616a", "info": "#81a1c1"
     },
-    "dark_reader_one_dark": {
+    "dr_one_dark": {
       "bg": "#282c34", "bgAlt": "#21252b", "card": "#2c313a", "cardHover": "#353b45",
       "border": "#3e4451", "fg": "#abb2bf", "fgMuted": "#5c6370",
       "accent": "#61afef", "accent2": "#528bcc", "accentText": "#282c34",
       "success": "#98c379", "warning": "#e5c07b", "danger": "#e06c75", "info": "#56b6c2"
     },
-    "dark_reader_osaka_jade": {
+    "dr_osaka_jade": {
       "bg": "#111c18", "bgAlt": "#0d1512", "card": "#1a2a24", "cardHover": "#22382f",
       "border": "#2d4a3e", "fg": "#c1c497", "fgMuted": "#788c7c",
       "accent": "#509475", "accent2": "#3b7058", "accentText": "#111c18",
       "success": "#509475", "warning": "#dca561", "danger": "#e56b6f", "info": "#6d9eeb"
     },
-    "dark_reader_oxocarbon": {
+    "dr_oxocarbon": {
       "bg": "#161616", "bgAlt": "#0d0d0d", "card": "#262626", "cardHover": "#333333",
       "border": "#393939", "fg": "#f2f4f8", "fgMuted": "#8d8d8d",
       "accent": "#33b1ff", "accent2": "#1192e8", "accentText": "#161616",
       "success": "#42be65", "warning": "#f1c21b", "danger": "#fa4d56", "info": "#33b1ff"
     },
-    "dark_reader_ristretto": {
+    "dr_ristretto": {
       "bg": "#2c2525", "bgAlt": "#241e1e", "card": "#3b3232", "cardHover": "#4a4040",
       "border": "#5a4f4f", "fg": "#fff1f3", "fgMuted": "#b09a9b",
       "accent": "#fd6883", "accent2": "#c44a61", "accentText": "#2c2525",
       "success": "#adda78", "warning": "#f9cc6c", "danger": "#fd6883", "info": "#85dacc"
     },
-    "dark_reader_rose_pine": {
+    "dr_rose_pine": {
       "bg": "#191724", "bgAlt": "#1f1d2e", "card": "#26233a", "cardHover": "#2a273f",
       "border": "#403d52", "fg": "#e0def4", "fgMuted": "#908caa",
       "accent": "#c4a7e7", "accent2": "#ebbcba", "accentText": "#191724",
       "success": "#9ccfd8", "warning": "#f6c177", "danger": "#eb6f92", "info": "#31748f"
     },
-    "dark_reader_selenized": {
+    "dr_selenized": {
       "bg": "#103c48", "bgAlt": "#0c3039", "card": "#184956", "cardHover": "#215566",
       "border": "#2d606f", "fg": "#adbcbc", "fgMuted": "#72898f",
       "accent": "#4695f7", "accent2": "#367bc7", "accentText": "#103c48",
       "success": "#75b938", "warning": "#dbb32d", "danger": "#fa5750", "info": "#41c7b9"
     },
-    "dark_reader_solarized": {
+    "dr_solarized": {
       "bg": "#002b36", "bgAlt": "#00252e", "card": "#073642", "cardHover": "#0a404f",
       "border": "#0b5162", "fg": "#93a1a1", "fgMuted": "#839496",
       "accent": "#268bd2", "accent2": "#1c6fa8", "accentText": "#fdf6e3",
       "success": "#859900", "warning": "#b58900", "danger": "#dc322f", "info": "#2aa198"
     },
-    "dark_reader_tokyo_night": {
+    "dr_tokyo_night": {
       "bg": "#1a1b26", "bgAlt": "#16161e", "card": "#24283b", "cardHover": "#2f334d",
       "border": "#414868", "fg": "#c0caf5", "fgMuted": "#565f89",
       "accent": "#7aa2f7", "accent2": "#5a82d7", "accentText": "#1a1b26",
@@ -568,28 +568,28 @@
         "id": "dark-reader", 
         "title": "🌙 Dark Reader", 
         "themes": [
-          "dark_reader_darkberry_blackwater",
-          "dark_reader_darkberry_fen",
-          "dark_reader_darkberry_mire",
-          "dark_reader_deep_ocean",
-          "dark_reader_default",
-          "dark_reader_dracula",
-          "dark_reader_everforest",
-          "dark_reader_github",
-          "dark_reader_gruvbox",
-          "dark_reader_kanagawa",
-          "dark_reader_material_you",
-          "dark_reader_matte_black",
-          "dark_reader_night_owl",
-          "dark_reader_nord",
-          "dark_reader_one_dark",
-          "dark_reader_osaka_jade",
-          "dark_reader_oxocarbon",
-          "dark_reader_ristretto",
-          "dark_reader_rose_pine",
-          "dark_reader_selenized",
-          "dark_reader_solarized",
-          "dark_reader_tokyo_night"
+          "dr_darkberry_blackwater",
+          "dr_darkberry_fen",
+          "dr_darkberry_mire",
+          "dr_deep_ocean",
+          "dr_default",
+          "dr_dracula",
+          "dr_everforest",
+          "dr_github",
+          "dr_gruvbox",
+          "dr_kanagawa",
+          "dr_material_you",
+          "dr_matte_black",
+          "dr_night_owl",
+          "dr_nord",
+          "dr_one_dark",
+          "dr_osaka_jade",
+          "dr_oxocarbon",
+          "dr_ristretto",
+          "dr_rose_pine",
+          "dr_selenized",
+          "dr_solarized",
+          "dr_tokyo_night"
         ]
       }
     ]
