@@ -5,11 +5,11 @@ import { renderTweaksFor } from './tweaks.js';
 import { SECURITY_SOURCES } from './sources-config.js';
 
 const DOCS = {
-  title: ' Безопасность',
+  title: '🛡 Безопасность',
   paragraphs: [
     { h: 'Что проверяет аудит', t: '21 параметр защиты Windows: брандмауэр, антивирус, UAC, BitLocker, SMBv1, подпись SMB, политика паролей, автозапуск, WDigest, LSA Protection, LLMNR, Remote Registry, PowerShell v2, DEP, ASLR, SmartScreen, анонимный доступ к SMB, гостевую SMB-аутентификацию и NetBIOS over TCP/IP.' },
     { h: 'Формула Score', t: 'Score = (Набрано / Максимум) × 5 + 1. Passed = 4 балла, Low = 2, Medium = 1, High = 0. Итоговый Score — от 1.00 до 6.00.' },
-    { h: 'Рейтинг', t: '6 — 😹 Excellent, 5 — 😻 Well done, 4 — 😺 Sufficient, 3 — 🙀 You should do better, 2 —  Weak, 1 — 😾 Bogus.' }
+    { h: 'Рейтинг', t: '6 — 😹 Excellent, 5 — 😻 Well done, 4 — 😺 Sufficient, 3 — 🙀 You should do better, 2 — 😿 Weak, 1 — 😾 Bogus.' }
   ]
 };
 
@@ -26,7 +26,6 @@ export function buildSecurityPanel(panel) {
   const tw = document.createElement('div');
   tw.id = 'sec-security-tweaks';
   panel.appendChild(tw);
-  // renderTweaksFor(tw, 'Безопасность', '🔐');
   renderTweaksFor(tw, SECURITY_SOURCES, 'security', 'Безопасность');
   renderResult();
 }
@@ -57,7 +56,6 @@ export function renderResult() {
       { label: 'Всего', value: s.stats.total, weight: '', cls: '' }
     ]
   }));
-  // ratingTable только здесь — в Безопасности
   wrap.appendChild(ratingTable(s.score));
 }
 

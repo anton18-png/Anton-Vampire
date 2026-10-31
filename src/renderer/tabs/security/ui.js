@@ -34,10 +34,16 @@ export function docCard(doc) {
 export function bigScoreCard({ title, subtitle, score, scoreMax, percent, grade, stats }) {
   const card = document.createElement('div');
   card.className = 'security-score-card';
-  const gradeClass = gradeClassOf(percent);
+  
+  // Берем процент напрямую из аудита (например, 61 или 100)
+  let actualPercent = typeof percent === 'number' ? percent : (scoreMax > 0 ? (score / scoreMax) * 100 : 0);
+  actualPercent = Math.max(0, Math.min(100, actualPercent));
+
+  const gradeClass = gradeClassOf(actualPercent);
   const size = 160, stroke = 12, radius = (size - stroke) / 2;
   const circ = 2 * Math.PI * radius;
-  const dash = (percent / 100) * circ;
+  // Сдвиг для заливки: чем больше процент, тем меньше сдвиг
+  const offset = circ - (actualPercent / 100) * circ;
 
   card.innerHTML = `
     <div class="security-score-head">
@@ -50,14 +56,17 @@ export function bigScoreCard({ title, subtitle, score, scoreMax, percent, grade,
     <div class="security-score-body">
       <div class="security-score-big">
         <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+          <!-- Задний фон круга -->
           <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none" stroke="color-mix(in srgb, var(--fg) 10%, transparent)" stroke-width="${stroke}"/>
+          <!-- Заливка -->
           <circle cx="${size/2}" cy="${size/2}" r="${radius}" fill="none" stroke="var(--accent)" stroke-width="${stroke}"
-            stroke-dasharray="${dash} ${circ}" stroke-dashoffset="${circ / 4}"
+            stroke-dasharray="${circ}" stroke-dashoffset="${offset}"
             stroke-linecap="round" transform="rotate(-90 ${size/2} ${size/2})"
-            style="transition: stroke-dasharray .6s ease"/>
+            style="transition: stroke-dashoffset 0.8s ease-in-out"/>
+            
           <text x="50%" y="46%" text-anchor="middle" dominant-baseline="middle" fill="var(--accent)" font-size="36" font-weight="900" font-family="var(--font-heading)">${Number(score).toFixed(2)}</text>
           <text x="50%" y="60%" text-anchor="middle" dominant-baseline="middle" fill="var(--fg-muted)" font-size="12" font-family="var(--font-heading)">из ${scoreMax}.00</text>
-          <text x="50%" y="74%" text-anchor="middle" dominant-baseline="middle" fill="var(--accent)" font-size="14" font-weight="700" font-family="var(--font-heading)">${Math.round(percent)}%</text>
+          <text x="50%" y="74%" text-anchor="middle" dominant-baseline="middle" fill="var(--accent)" font-size="14" font-weight="700" font-family="var(--font-heading)">${Math.round(actualPercent)}%</text>
         </svg>
       </div>
       <div class="security-score-stats">
@@ -84,7 +93,7 @@ export function ratingTable(currentScore) {
     { score: 4, emoji: '😺', casual: 'Sufficient', prof: 'Sufficient', desc: 'Достаточный уровень.' },
     { score: 3, emoji: '🙀', casual: 'You should do better', prof: 'Insufficient', desc: 'Защита слабая.' },
     { score: 2, emoji: '😿', casual: 'Weak', prof: 'Poor', desc: 'Критически слабая защита.' },
-    { score: 1, emoji: '', casual: 'Bogus', prof: 'Bogus', desc: 'Защита отсутствует.' }
+    { score: 1, emoji: '😾', casual: 'Bogus', prof: 'Bogus', desc: 'Защита отсутствует.' }
   ];
   wrap.innerHTML = `
     <div class="section-title" style="margin-top: 16px;">📊 Рейтинг защиты</div>

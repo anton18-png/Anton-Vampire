@@ -25,7 +25,6 @@ export function buildComfortPanel(panel) {
   const tw = document.createElement('div');
   tw.id = 'sec-comfort-tweaks';
   panel.appendChild(tw);
-  // renderTweaksFor(tw, 'Удобство', '');
   renderTweaksFor(tw, COMFORT_SOURCES, 'comfort', 'Удобство');
 
   renderResult();
@@ -45,7 +44,7 @@ export function renderResult() {
   wrap.appendChild(bigScoreCard({
     title: 'Уровень удобства',
     subtitle: 'Чем выше — тем больше защит отключено ради удобства',
-    score: (c.percent / 100) * 6,
+    score: (c.percent / 100) * 6, // Для текста 6.00
     scoreMax: 6,
     percent: c.percent,
     grade: c.grade,
@@ -55,7 +54,6 @@ export function renderResult() {
       { label: 'Всего', value: c.total, weight: '', cls: '' }
     ]
   }));
-  // ratingTable НЕ добавляем — он только в Безопасности
 }
 
 export async function autoAuditComfort(isAutoEnabled) {

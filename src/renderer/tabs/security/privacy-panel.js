@@ -27,7 +27,6 @@ export function buildPrivacyPanel(panel) {
   const tw = document.createElement('div');
   tw.id = 'sec-privacy-tweaks';
   panel.appendChild(tw);
-  // renderTweaksFor(tw, 'Приватность', '🕵');
   renderTweaksFor(tw, PRIVACY_SOURCES, 'privacy', 'Приватность');
   renderResult();
 }
@@ -46,7 +45,7 @@ export function renderResult() {
   wrap.appendChild(bigScoreCard({
     title: 'Уровень приватности',
     subtitle: 'Чем выше — тем меньше Windows собирает о вас данные',
-    score: (p.percent / 100) * 6,
+    score: (p.percent / 100) * 6, // Для текста 6.00
     scoreMax: 6,
     percent: p.percent,
     grade: p.grade,
@@ -57,7 +56,6 @@ export function renderResult() {
       { label: 'Утечек', value: (p.leaks || []).length, weight: '', cls: (p.leaks || []).length === 0 ? 'good' : 'bad' }
     ]
   }));
-  // ratingTable НЕ добавляем — он только в Безопасности
 }
 
 export async function autoAuditPrivacy(isAutoEnabled) {
