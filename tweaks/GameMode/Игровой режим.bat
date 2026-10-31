@@ -1,7 +1,6 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 chcp 65001 >nul
-title xOS Playbook - Game Mode
 
 net session >nul 2>&1 || (
   echo [!] Запустите от имени администратора.
@@ -12,6 +11,9 @@ echo ===========================================================================
 echo                       xOS PLAYBOOK - ИГРОВОЙ РЕЖИМ
 echo ================================================================================
 echo.
+
+set "LIST_FILE=%~dp0services.txt"
+if not exist "%LIST_FILE%" (echo [ОШИБКА] Не найден "%LIST_FILE%" & pause & exit /b 1)
 
 REM ============================================================================
 REM 1. ТАЙМАУТЫ AC / DC
